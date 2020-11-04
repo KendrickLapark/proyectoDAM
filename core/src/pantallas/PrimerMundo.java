@@ -74,7 +74,7 @@ public class PrimerMundo implements Screen {
         orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
 
 
-        orthographicCamera.zoom = 1f;
+        orthographicCamera.zoom = 0.9f;
 
         teclado = new Teclado(p1);
         Gdx.input.setInputProcessor(teclado);
@@ -124,7 +124,23 @@ public class PrimerMundo implements Screen {
 
         juego.getSpriteBatch().begin();
 
+        p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
+
+        System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
+
+        System.out.println("Estado personaje:  "+p1.getEstado());
+
+        System.out.println("Direccion personaje:  "+p1.getDireccion());
+
+        System.out.println("EL SUELO ESTA AQUI: "+p1.getPosicionSuelo());
+
+        System.out.println("POSICION DEL DICHOSO BODY Y: "+p1.getCuerpo().getPosition().y);
+
+        System.out.println("RAFAGAZOOOOOOOOOOOOOOOOO: "+p1.getRafagazo());
+
+        teclado.entrada();
+
 
         juego.getSpriteBatch().end();
 

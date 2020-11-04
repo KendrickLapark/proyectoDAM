@@ -19,6 +19,9 @@ import java.util.ArrayList;
 
 public class Personaje extends Actor {
 
+    public enum Direccion{ DERECHA, IZQUIERDA}
+    public enum Estado{QUIETO, ANDANDO, AIRE}
+
     private World world;
     private Sprite sprite;
     private Music salto, caida, recargaKi, kamehamehaSound;
@@ -33,23 +36,32 @@ public class Personaje extends Actor {
     private TextureRegion[][] tmp;
     private TextureRegion currentWalkFrame;
 
+    private Direccion direccion;
+    private Estado estado;
+
+    private float posicionSuelo;
+
     //private ArrayList <Onda> listaOndas;
 
     private float animationTime, ki;
 
-    private Boolean rafagazo, bkhamehameha, loop, cargando;
+    private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando;
 
-    private int personajeNumero, indexk, salud;
+    private int personajeNumero, indexk, salud, contador;
 
     public Personaje(World mundo, int personajeElegido){
 
         this.world = mundo;
 
-        personajeNumero = personajeElegido;
+        personajeNumero = 1;
 
         salud = 2;
         ki = 0;
 
+        cayendo = false;
+
+        direccion = Direccion.DERECHA;
+        estado = Estado.QUIETO;
         //listaOndas = new ArrayList<>();
 
         salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
@@ -60,14 +72,22 @@ public class Personaje extends Actor {
         sprite = new Sprite(new Texture("personajes/Goku/gstandr.png"));
 
         propiedadesFisicas();
+        posicionSuelo = 2.6f;
+
+       contador = 0;
+
+        eleccionPersonaje();
 
         loop = true;
         cargando = false;
+        rafagazo = false;
 
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
+        actualizarEstado();
 
         sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.3f , 1.3f );
         sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - sprite.getHeight() / 2);
@@ -92,8 +112,215 @@ public class Personaje extends Actor {
 
     }
 
+    public void actualizarEstado(){
+
+        if(body.getLinearVelocity().x == 0 && body.getLinearVelocity().y == 0){
+            estado = Estado.QUIETO;
+        }
+
+        if(body.getPosition().y>posicionSuelo){
+            estado = Estado.AIRE;
+        }
+
+        if(body.getLinearVelocity().y>0){
+            cayendo = false;
+        }else if(body.getLinearVelocity().y<0){
+            cayendo = true;
+        }
+
+        if(body.getLinearVelocity().x>0){
+            direccion =  Direccion.DERECHA;
+        }else if(body.getLinearVelocity().x<0)
+            direccion = Direccion.IZQUIERDA;
+
+        if(estado != Estado.AIRE && body.getLinearVelocity().x!=0){
+            estado = Estado.ANDANDO;
+
+        }
+
+    }
+
+    public void animaciones(float elapsedTime){
+
+
+        if(estado == Estado.QUIETO && rafagazo==false){
+            if(direccion == Direccion.DERECHA){
+                sprite = new Sprite(standr);
+            }else{
+                sprite = new Sprite(standl);
+            }
+        }else{
+            if(direccion == Direccion.DERECHA){
+                sprite = new Sprite(rafaga1);
+            }else{
+                sprite = new Sprite(rafaga2);
+            }
+        }
+
+        if(estado == Estado.ANDANDO){
+
+            if(direccion == Direccion.DERECHA){
+
+                int a = 3;
+
+                tmp = TextureRegion.split(andando1,37,58);
+                walkFrames = new TextureRegion[a];
+
+                int index = 0;
+
+                for(int i = 0; i<a;i++){
+                    for(int j = 0; j<1;j++){
+                        walkFrames[index++] = tmp[j][i];
+                    }
+                }
+
+                walkAnimation = new Animation(body.getLinearVelocity().x*(1/(7*body.getLinearVelocity().x)),walkFrames); // a mas número la animacion va mas lento , a 1 va muy lento a 0.001 muy rapido()
+
+                currentWalkFrame =  (TextureRegion)walkAnimation.getKeyFrame((elapsedTime),loop);
+
+                sprite = new Sprite(currentWalkFrame);
+
+            }else{
+
+                int a = 3;
+
+                tmp = TextureRegion.split(andando2,37,58);
+                walkFrames = new TextureRegion[a];
+
+                int index2 = 0;
+
+                for(int i = 0; i<a;i++){
+                    for(int j = 0; j<1;j++){
+                        walkFrames[index2++] = tmp[j][i];
+                    }
+                }
+
+                walkAnimation = new Animation(body.getLinearVelocity().x*(1/(7*body.getLinearVelocity().x)),walkFrames);
+
+                currentWalkFrame =  (TextureRegion)walkAnimation.getKeyFrame((elapsedTime),loop);
+
+                sprite = new Sprite(currentWalkFrame);
+
+            }
+        }
+
+        if(estado == Estado.AIRE){
+
+            if(cayendo == false){
+                if(direccion == Direccion.DERECHA){
+                    sprite = new Sprite(jumpr);
+                }else{
+                    sprite = new Sprite(jumpl);
+                }
+            }else{
+                if(direccion == Direccion.DERECHA){
+                    sprite = new Sprite(fallr);
+                }else{
+                    sprite = new Sprite(falll);
+                }
+            }
+
+            salto.play();
+            salto.setVolume(0.02f);
+        }
+
+    }
+
+    public void eleccionPersonaje(){
+
+        if(personajeNumero==1){
+            standr = new Texture("personajes/Goku/gstandr.png");
+            standl = new Texture("personajes/Goku/gstandl.png");
+            jumpr = new Texture("personajes/Goku/gjumpr.png");
+            jumpl = new Texture("personajes/Goku/gjumpl.png");
+            fallr = new Texture("personajes/Goku/gfallr.png");
+            falll = new Texture("personajes/Goku/gfalll.png");
+            rafaga1 = new Texture("personajes/Goku/gokurafaga.png");
+            rafaga2 = new Texture("personajes/Goku/gokurafagaL.png");
+
+            lanzaR = new Texture("personajes/Goku/kamehameha/lanzandoR.png");
+            lanzaL = new Texture("personajes/Goku/kamehameha/lanzandoL.png");
+
+            salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
+            caida = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/caidatrassalto.mp3"));
+
+            andando1 = new Texture("personajes/Goku/animacion/wg.png");
+            andando2 = new Texture("personajes/Goku/animacion2/walkinggoku2.png");
+            kamehamehaTextureR = new Texture("personajes/Goku/kamehameha/kamehamehaR.png");
+            kamehamehaTextureL = new Texture("personajes/Goku/kamehameha/kamehamehaL.png");
+            cargandoR = new Texture("personajes/Goku/animacioncargaR/cargando.png");
+
+            sprite = new Sprite(standr);
+
+            currentWalkFrame = new TextureRegion(standr);
+        }
+
+        if(personajeNumero==2){
+            standr = new Texture("personajes/Vegeta/vstandr.png");
+            standl = new Texture("personajes/Vegeta/vstandl.png");
+            jumpr = new Texture("personajes/Vegeta/vjumpr.png");
+            jumpl = new Texture("personajes/Vegeta/vjumpl.png");
+            fallr = new Texture("personajes/Vegeta/vfallr.png");
+            falll = new Texture("personajes/Vegeta/vfalll.png");
+            rafaga1 = new Texture("personajes/Vegeta/vrafagar.png");
+            rafaga2 = new Texture("personajes/Vegeta/vrafagal.png");
+            andando1 = new Texture("personajes/Vegeta/animacion1/vandandor.png");
+            andando2 = new Texture("personajes/Vegeta/animacion2/vandandol.png");
+
+            salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
+            caida = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/caidatrassalto.mp3"));
+
+            sprite = new Sprite(standr);
+
+            currentWalkFrame = new TextureRegion(standr);
+        }
+
+        if(personajeNumero==3){
+            standr = new Texture("personajes/Piccolo/pstandr.png");
+            standl = new Texture("personajes/Piccolo/pstandl.png");
+            jumpr = new Texture("personajes/Piccolo/pjumpr.png");
+            jumpl = new Texture("personajes/Piccolo/pjumpl.png");
+            fallr = new Texture("personajes/Piccolo/pfallr.png");
+            falll = new Texture("personajes/Piccolo/pfalll.png");
+            rafaga1 = new Texture("personajes/Piccolo/prafagar.png");
+            rafaga2 = new Texture("personajes/Piccolo/prafagal.png");
+            andando1 = new Texture("personajes/Piccolo/animacion1/pandandor.png");
+            andando2 = new Texture("personajes/Piccolo/animacion2/pandandol.png");
+
+            sprite = new Sprite(standr);
+
+            currentWalkFrame = new TextureRegion(standr);
+        }
+
+    }
+
     public Body getCuerpo(){
         return body;
     }
+
+    public Estado getEstado(){
+        return estado;
+    }
+
+    public Direccion getDireccion(){
+        return direccion;
+    }
+
+    public float getPosicionSuelo(){
+        return posicionSuelo;
+    }
+
+    public void setRafagazo(boolean rafagazo){
+         this.rafagazo = rafagazo;
+    }
+
+    public void setCargando(boolean cargando){
+        this.cargando = cargando;
+    }
+
+    public boolean getRafagazo(){
+        return rafagazo;
+    }
+
 
 }

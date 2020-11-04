@@ -44,7 +44,32 @@ public class Teclado implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+
+        switch (keycode){
+
+            case Input.Keys.F:
+                personaje.setRafagazo(false);
+                break;
+
+            case Input.Keys.X:
+                personaje.setCargando(false);
+                break;
+
+        }
+
         return false;
+    }
+
+    public void entrada(){
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            personaje.setRafagazo(true);
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.X)){
+            personaje.setCargando(true);
+        }
+
     }
 
     @Override
