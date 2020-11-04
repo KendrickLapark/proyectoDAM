@@ -1,0 +1,33 @@
+
+botonesA.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+botonAbajo
+  rotate: false
+  xy: 1, 657
+  size: 330, 326
+  orig: 330, 326
+  offset: 0, 0
+  index: -1
+botonArriba
+  rotate: false
+  xy: 1, 329
+  size: 330, 326
+  orig: 330, 326
+  offset: 0, 0
+  index: -1
+botonDerecha
+  rotate: false
+  xy: 333, 657
+  size: 330, 326
+  orig: 330, 326
+  offset: 0, 0
+  index: -1
+botonIzquierda
+  rotate: false
+  xy: 1, 1
+  size: 330, 326
+  orig: 330, 326
+  offset: 0, 0
+  index: -1

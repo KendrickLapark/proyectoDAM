@@ -1,0 +1,12 @@
+
+lanzandoL.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+lanzandoL
+  rotate: false
+  xy: 1, 1
+  size: 137, 47
+  orig: 137, 47
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,26 @@
+
+saibamanfallingR.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+sr3
+  rotate: false
+  xy: 1, 26
+  size: 48, 27
+  orig: 48, 27
+  offset: 0, 0
+  index: -1
+sr1
+  rotate: false
+  xy: 51, 17
+  size: 35, 36
+  orig: 35, 36
+  offset: 0, 0
+  index: -1
+sr2
+  rotate: false
+  xy: 1, 1
+  size: 35, 23
+  orig: 35, 23
+  offset: 0, 0
+  index: -1

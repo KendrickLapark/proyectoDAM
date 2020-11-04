@@ -1,0 +1,33 @@
+
+cargando.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+animacioncarga1
+  rotate: false
+  xy: 1, 1
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1
+animacioncarga2
+  rotate: false
+  xy: 124, 1
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1
+animacioncarga3
+  rotate: false
+  xy: 247, 1
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1
+animacioncarga4
+  rotate: false
+  xy: 370, 1
+  size: 121, 117
+  orig: 121, 117
+  offset: 0, 0
+  index: -1

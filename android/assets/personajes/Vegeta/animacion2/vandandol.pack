@@ -1,0 +1,12 @@
+
+vandandol.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+vandandol
+  rotate: false
+  xy: 1, 1
+  size: 66, 44
+  orig: 66, 44
+  offset: 0, 0
+  index: -1

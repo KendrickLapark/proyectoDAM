@@ -1,0 +1,12 @@
+
+kamehamehaL.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tiraLRemake2
+  rotate: false
+  xy: 7, 1
+  size: 531, 46
+  orig: 531, 46
+  offset: 0, 0
+  index: -1

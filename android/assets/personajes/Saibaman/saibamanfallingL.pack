@@ -1,0 +1,12 @@
+
+saibamanfallingL.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+saibaman fall left
+  rotate: false
+  xy: 1, 1
+  size: 192, 53
+  orig: 192, 53
+  offset: 0, 0
+  index: -1

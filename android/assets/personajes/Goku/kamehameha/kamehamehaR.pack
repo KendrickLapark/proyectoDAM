@@ -1,0 +1,12 @@
+
+deuna.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+trakon
+  rotate: false
+  xy: 9, 1
+  size: 531, 46
+  orig: 531, 46
+  offset: 0, 0
+  index: -1

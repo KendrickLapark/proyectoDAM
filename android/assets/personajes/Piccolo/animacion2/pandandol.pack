@@ -1,0 +1,12 @@
+
+pandandol.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+pandandol
+  rotate: false
+  xy: 1, 1
+  size: 74, 40
+  orig: 74, 40
+  offset: 0, 0
+  index: -1
