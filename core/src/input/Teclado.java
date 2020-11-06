@@ -4,21 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 import actores.Personaje;
+import objetos.Onda;
 
 public class Teclado implements InputProcessor {
 
     private Personaje personaje;
+    private World world;
 
-    public Teclado(Personaje personaje) {
+    public Teclado(World world,Personaje personaje) {
         this.personaje = personaje;
+        this.world = world;
     }
 
     @Override
     public boolean keyDown(int keycode) {
 
-        Gdx.app.log("eventoDown","Input "+keycode);
+       // Gdx.app.log("eventoDown","Input "+keycode);
         switch (keycode) {
             case Input.Keys.D:
                 personaje.getCuerpo().applyLinearImpulse(new Vector2(7,0),personaje.getCuerpo().getWorldCenter(),true);
@@ -33,9 +37,11 @@ public class Teclado implements InputProcessor {
                 personaje.getCuerpo().setLinearVelocity(0,0);
                 break;
             case Input.Keys.E:
+
                 break;
 
             case Input.Keys.X:
+
                 break;
         }
         return true;
@@ -64,6 +70,8 @@ public class Teclado implements InputProcessor {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
             personaje.setRafagazo(true);
+            personaje.getListaOndas().add(new Onda(world, personaje));
+            personaje.setEstado(Personaje.Estado.RAFAGA);
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.X)){

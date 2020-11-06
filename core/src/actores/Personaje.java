@@ -1,12 +1,14 @@
 package actores;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -17,10 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 
+import objetos.Onda;
+
 public class Personaje extends Actor {
 
     public enum Direccion{ DERECHA, IZQUIERDA}
-    public enum Estado{QUIETO, ANDANDO, AIRE}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA}
 
     private World world;
     private Sprite sprite;
@@ -36,6 +40,8 @@ public class Personaje extends Actor {
     private TextureRegion[][] tmp;
     private TextureRegion currentWalkFrame;
 
+    private ArrayList <Onda> listaOndas;
+
     private Direccion direccion;
     private Estado estado;
 
@@ -45,7 +51,7 @@ public class Personaje extends Actor {
 
     private float animationTime, ki;
 
-    private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando;
+    private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando, colisionCapsula;
 
     private int personajeNumero, indexk, salud, contador;
 
@@ -58,7 +64,10 @@ public class Personaje extends Actor {
         salud = 2;
         ki = 0;
 
+        listaOndas = new ArrayList<>();
+
         cayendo = false;
+        colisionCapsula = false;
 
         direccion = Direccion.DERECHA;
         estado = Estado.QUIETO;
@@ -86,6 +95,10 @@ public class Personaje extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
+        for (Onda onda : listaOndas){
+            onda.draw(batch,parentAlpha);
+        }
 
         actualizarEstado();
 
@@ -138,10 +151,13 @@ public class Personaje extends Actor {
 
         }
 
+        if(Gdx.input.isKeyPressed(Input.Keys.F)){
+            estado = Estado.RAFAGA;
+        }
+
     }
 
     public void animaciones(float elapsedTime){
-
 
         if(estado == Estado.QUIETO && rafagazo==false){
             if(direccion == Direccion.DERECHA){
@@ -149,7 +165,9 @@ public class Personaje extends Actor {
             }else{
                 sprite = new Sprite(standl);
             }
-        }else{
+        }
+
+        if(estado == Estado.RAFAGA){
             if(direccion == Direccion.DERECHA){
                 sprite = new Sprite(rafaga1);
             }else{
@@ -294,6 +312,19 @@ public class Personaje extends Actor {
 
     }
 
+    public boolean recoleccion(Capsula capsula){
+
+        boolean overlaps=getHitBox().overlaps(capsula.getHitBox());
+        System.out.println("Esto overlapea o que"+overlaps);
+        if(overlaps&&colisionCapsula==false){
+            colisionCapsula=true;
+            Gdx.app.log("Colisionando","con "+capsula.getClass().getName());
+        }else if(!overlaps){
+            colisionCapsula=false;
+        }
+        return colisionCapsula;
+    }
+
     public Body getCuerpo(){
         return body;
     }
@@ -318,9 +349,27 @@ public class Personaje extends Actor {
         this.cargando = cargando;
     }
 
+    public boolean getCargando(){
+        return cargando;
+    }
+
     public boolean getRafagazo(){
         return rafagazo;
     }
 
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
+    public ArrayList <Onda> getListaOndas(){
+        return listaOndas;
+    }
+
+    public Boolean getColisionCapsula() {
+        return colisionCapsula;
+    }
+
+    public Rectangle getHitBox(){
+        return sprite.getBoundingRectangle();
+    }
 }
