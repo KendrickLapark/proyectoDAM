@@ -24,7 +24,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Juego;
 
@@ -213,15 +212,12 @@ public class PrimerMundo implements Screen {
 
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
-        p1.recoleccion(c1);
+
 
         e1.animacionAcciones(elapsedTime);
         e1.draw(juego.getSpriteBatch(),0);
 
-        if(p1.recoleccion(c1)){
-            c1.draw(juego.getSpriteBatch(),0);
-        }
-
+        c1.draw(juego.getSpriteBatch(),0);
 
 
         //DEBUGS
@@ -240,10 +236,13 @@ public class PrimerMundo implements Screen {
 
         //System.out.println("Overlasps primer mundo"+p1.recoleccion(c1));
 
+        c1.recoleccion(p1);
+
+        System.out.println("COLISION??????------------------>"+c1.getColision());
+
         teclado.entrada();
 
         juego.getSpriteBatch().end();
-        
 
     }
 

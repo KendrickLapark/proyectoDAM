@@ -51,7 +51,7 @@ public class Personaje extends Actor {
 
     private float animationTime, ki;
 
-    private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando, colisionCapsula;
+    private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando, colision;
 
     private int personajeNumero, indexk, salud, contador;
 
@@ -67,7 +67,7 @@ public class Personaje extends Actor {
         listaOndas = new ArrayList<>();
 
         cayendo = false;
-        colisionCapsula = false;
+        colision = false;
 
         direccion = Direccion.DERECHA;
         estado = Estado.QUIETO;
@@ -312,18 +312,7 @@ public class Personaje extends Actor {
 
     }
 
-    public boolean recoleccion(Capsula capsula){
 
-        boolean overlaps=getHitBox().overlaps(capsula.getHitBox());
-        System.out.println("Esto overlapea o que"+overlaps);
-        if(overlaps&&colisionCapsula==false){
-            colisionCapsula=true;
-            Gdx.app.log("Colisionando","con "+capsula.getClass().getName());
-        }else if(!overlaps){
-            colisionCapsula=false;
-        }
-        return colisionCapsula;
-    }
 
     public Body getCuerpo(){
         return body;
@@ -365,8 +354,8 @@ public class Personaje extends Actor {
         return listaOndas;
     }
 
-    public Boolean getColisionCapsula() {
-        return colisionCapsula;
+    public Boolean getcolision() {
+        return colision;
     }
 
     public Rectangle getHitBox(){

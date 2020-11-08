@@ -15,13 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Capsula extends Actor {
 
     private Sprite sprite; //Sprite que simboliza al actor
-    private String ruta; // ruta del png del sprite
     private World world; //Mundo de nuestro juego
     private BodyDef propiedadesCuerpo; //Definidor de las propiedades del body
     private Body cuerpo; //Cuerpo del objeto
     private FixtureDef propiedadesFisicasCuerpo;//Definidor de las propiedades físicas del body
     private Boolean colision; // Boolean para detectar si colisiona con otros cuerpos
     private Personaje personaje;
+    private int contadorColision;
 
 
     public Capsula(World world, Personaje personaje, String ruta, float x, float y){
@@ -29,6 +29,8 @@ public class Capsula extends Actor {
         this.world = world;
         this.personaje = personaje;
         sprite = new Sprite(new Texture(ruta));
+
+        contadorColision = 0;
 
         colision = false;
 
@@ -60,20 +62,11 @@ public class Capsula extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        //colision(personaje);
-
-
+        if(contadorColision==0){
             sprite.setOrigin(cuerpo.getPosition().x,cuerpo.getPosition().y);
             sprite.setBounds(cuerpo.getPosition().x - 0.35f,cuerpo.getPosition().y - 0.35f,0.7f,0.7f);
             sprite.draw(batch);
-
-
-
-        /*if(sprite!=null){
-            sprite.setOrigin(cuerpo.getPosition().x,cuerpo.getPosition().y);
-            sprite.setBounds(cuerpo.getPosition().x - 0.35f,cuerpo.getPosition().y - 0.35f,0.7f,0.7f);
-            sprite.draw(batch);
-        }*/
+        }
 
     }
 
@@ -81,6 +74,13 @@ public class Capsula extends Actor {
         return colision;
     }
 
+    public void recoleccion(Personaje personaje){
 
+                boolean overlaps=getHitBox().overlaps(personaje.getHitBox());
+                if(overlaps){
+                    contadorColision++;
+                }
+
+    }
 
 }
