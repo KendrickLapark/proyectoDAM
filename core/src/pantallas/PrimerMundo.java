@@ -3,6 +3,7 @@ package pantallas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -46,6 +47,8 @@ public class PrimerMundo implements Screen {
 
     private TiledMap map;
 
+    private Texture blank;
+
     private Personaje p1;
     private Enemigo e1;
     private Capsula c1;
@@ -62,23 +65,25 @@ public class PrimerMundo implements Screen {
 
     float elapsedTime;
 
-    private Texture blank;
-
     private Teclado teclado;
 
 
-    public PrimerMundo(Juego loc){
+    public PrimerMundo(Juego loc, int personajeSeleccionado){
 
         this.juego = loc;
+        this.personajeSeleccionado = personajeSeleccionado;
         orthographicCamera = new OrthographicCamera(20,20);
         world = new World(new Vector2(0,-9.8f),true);
         map = new TmxMapLoader().load("mapa/mapav2.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
+        blank = new Texture("recursos/blank.png");
 
         p1 = new Personaje(world, 1);
         e1 = new Enemigo(world,30,43,1);
         c1 = new Capsula(world, p1,"Objetos/capsule.png", 6,6);
         ondasToDestroy = new ArrayList<>();
+
+        Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
 
         musica = Gdx.audio.newMusic(Gdx.files.internal("sonido/musica/dbzInicio.mp3"));
         musica.play();
@@ -88,7 +93,6 @@ public class PrimerMundo implements Screen {
         box2DDebugRenderer = new Box2DDebugRenderer();
 
         orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
-
 
         orthographicCamera.zoom = 0.9f;
 
@@ -210,6 +214,9 @@ public class PrimerMundo implements Screen {
 
         juego.getSpriteBatch().begin();
 
+        Interface.draw(orthographicCamera);
+        //Interface.muestraKi(p1.getKi(),p1.getCuerpo().getPosition().x, p1.getCuerpo().getPosition().y, orthographicCamera);
+
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
 
@@ -238,9 +245,20 @@ public class PrimerMundo implements Screen {
 
         c1.recoleccion(p1);
 
+        System.out.println("KIKIKIKIKI"+p1.getKi());
+
         System.out.println("COLISION??????------------------>"+c1.getColision());
 
+        System.out.println("Estado personaje:  "+p1.getEstado());
+
         teclado.entrada();
+
+        juego.getSpriteBatch().setColor(Color.GRAY);
+        juego.getSpriteBatch().draw(blank,p1.getCuerpo().getPosition().x-3,-0.5f, 8,0.2f);
+
+        juego.getSpriteBatch().setColor(Color.YELLOW);
+
+        juego.getSpriteBatch().draw(blank, p1.getCuerpo().getPosition().x-3, -0.5f, p1.getKi(), 0.2f);
 
         juego.getSpriteBatch().end();
 

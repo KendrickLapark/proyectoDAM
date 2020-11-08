@@ -37,3 +37,9 @@ task dist(type: Jar) {
 dist.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
+
+dependencies {
+
+    compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
+}

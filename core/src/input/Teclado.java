@@ -40,9 +40,6 @@ public class Teclado implements InputProcessor {
 
                 break;
 
-            case Input.Keys.X:
-
-                break;
         }
         return true;
 
@@ -68,14 +65,11 @@ public class Teclado implements InputProcessor {
 
     public void entrada(){
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F) && personaje.getKi()>=1){
             personaje.setRafagazo(true);
             personaje.getListaOndas().add(new Onda(world, personaje));
             personaje.setEstado(Personaje.Estado.RAFAGA);
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.X)){
-            personaje.setCargando(true);
+            personaje.setKi(-1);
         }
 
     }

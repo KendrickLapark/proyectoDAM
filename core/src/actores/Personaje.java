@@ -24,7 +24,7 @@ import objetos.Onda;
 public class Personaje extends Actor {
 
     public enum Direccion{ DERECHA, IZQUIERDA}
-    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO}
 
     private World world;
     private Sprite sprite;
@@ -45,11 +45,11 @@ public class Personaje extends Actor {
     private Direccion direccion;
     private Estado estado;
 
-    private float posicionSuelo;
+    private float posicionSuelo, ki, velocidadRecarga;
 
     //private ArrayList <Onda> listaOndas;
 
-    private float animationTime, ki;
+    private float animationTime;
 
     private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando, colision;
 
@@ -59,10 +59,10 @@ public class Personaje extends Actor {
 
         this.world = mundo;
 
-        personajeNumero = 1;
 
+        personajeNumero = 1;
         salud = 2;
-        ki = 0;
+        ki = 8;
 
         listaOndas = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class Personaje extends Actor {
         propiedadesFisicas();
         posicionSuelo = 2.6f;
 
-       contador = 0;
+        contador = 0;
 
         eleccionPersonaje();
 
@@ -153,6 +153,16 @@ public class Personaje extends Actor {
 
         if(Gdx.input.isKeyPressed(Input.Keys.F)){
             estado = Estado.RAFAGA;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.X)){
+            if(this.getKi()<=7.9f){
+                velocidadRecarga = 0.1f;
+
+                this.setKi(velocidadRecarga);
+                estado = Estado.CARGANDO;
+            }
+
         }
 
     }
@@ -242,6 +252,20 @@ public class Personaje extends Actor {
             salto.setVolume(0.02f);
         }
 
+        if(estado == Estado.CARGANDO){
+            body.setLinearVelocity(0,0);
+            if(direccion == Direccion.DERECHA){
+                sprite = new Sprite(new Texture("personajes/Goku/cargaR2.png"));
+                sprite.setBounds(body.getPosition().x+4, body.getPosition().y,3f , 3f );
+            }else{
+                sprite = new Sprite(new Texture("personajes/Goku/cargaL.png"));
+            }
+            recargaKi.play();
+            recargaKi.setVolume(0.03f);
+        }else{
+            recargaKi.stop();
+        }
+
     }
 
     public void eleccionPersonaje(){
@@ -312,8 +336,6 @@ public class Personaje extends Actor {
 
     }
 
-
-
     public Body getCuerpo(){
         return body;
     }
@@ -356,6 +378,16 @@ public class Personaje extends Actor {
 
     public Boolean getcolision() {
         return colision;
+    }
+
+    public void setKi(float cantKi){
+        if(ki>=0){
+            ki+=cantKi;
+        }
+    }
+
+    public float getKi() {
+        return ki;
     }
 
     public Rectangle getHitBox(){
