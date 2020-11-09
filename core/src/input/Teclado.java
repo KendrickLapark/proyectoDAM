@@ -36,7 +36,9 @@ public class Teclado implements InputProcessor {
                 }
                 break;
             case Input.Keys.W:
-                personaje.getCuerpo().applyLinearImpulse(new Vector2(0,10),personaje.getCuerpo().getWorldCenter(),true);
+                if(personaje.getEstado()!= Personaje.Estado.AIRE){
+                    personaje.getCuerpo().applyLinearImpulse(new Vector2(0,10),personaje.getCuerpo().getWorldCenter(),true);
+                }
                 break;
             case Input.Keys.S:
                 personaje.getCuerpo().setLinearVelocity(0,0);

@@ -74,7 +74,7 @@ public class PrimerMundo implements Screen {
         this.personajeSeleccionado = personajeSeleccionado;
         orthographicCamera = new OrthographicCamera(20,20);
         world = new World(new Vector2(0,-9.8f),true);
-        map = new TmxMapLoader().load("mapa/mapav7.tmx");
+        map = new TmxMapLoader().load("mapa/mapav8.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
         blank = new Texture("recursos/blank.png");
 
@@ -108,6 +108,7 @@ public class PrimerMundo implements Screen {
             propiedadesFisicasRectangulo.shape = formaRectanguloSuelo;
             propiedadesFisicasRectangulo.density = 1f;
             rectanguloSuelo.createFixture(propiedadesFisicasRectangulo);
+
         }
 
         world.setContactListener(new ContactListener() {
@@ -153,6 +154,8 @@ public class PrimerMundo implements Screen {
                     System.out.println("En la plataforma");
                     p1.getEstado() = Personaje.Estado.ENPLATAFORMA;
                 }*/
+
+
 
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
@@ -249,11 +252,11 @@ public class PrimerMundo implements Screen {
 
         c1.recoleccion(p1);
 
-        System.out.println("KIKIKIKIKI"+p1.getKi());
+        /*System.out.println("KIKIKIKIKI"+p1.getKi());
 
         System.out.println("COLISION??????------------------>"+c1.getColision());
 
-        System.out.println("Estado personaje:  "+p1.getEstado());
+        System.out.println("Estado personaje:  "+p1.getEstado());*/
 
         teclado.entrada();
 

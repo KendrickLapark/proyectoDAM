@@ -131,11 +131,11 @@ public class Personaje extends Actor {
             estado = Estado.MUERTO;
         }
 
-        if(body.getLinearVelocity().x == 0 && body.getLinearVelocity().y == 0){
+        if( body.getLinearVelocity().y == 0){
             estado = Estado.QUIETO;
         }
 
-        if(body.getPosition().y>posicionSuelo){
+        if(body.getPosition().y>posicionSuelo  && body.getLinearVelocity().y != 0){
             estado = Estado.AIRE;
         }
 
