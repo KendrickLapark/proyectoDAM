@@ -70,9 +70,6 @@ public class Capsula extends Actor {
 
     }
 
-    public Boolean getColision() {
-        return colision;
-    }
 
     public void recoleccion(Personaje personaje){
 

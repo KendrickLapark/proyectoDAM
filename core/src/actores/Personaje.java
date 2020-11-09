@@ -102,9 +102,16 @@ public class Personaje extends Actor {
 
         actualizarEstado();
 
-        sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.3f , 1.3f );
-        sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - sprite.getHeight() / 2);
-        sprite.draw(batch);
+        if(estado == Estado.CARGANDO){
+            sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.8f , 1.8f );
+            sprite.setPosition(body.getPosition().x-0.9f , body.getPosition().y-0.63f);
+            sprite.draw(batch);
+        }else{
+            sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.3f , 1.3f );
+            sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - sprite.getHeight() / 2);
+            sprite.draw(batch);
+        }
+
 
     }
 
@@ -160,8 +167,8 @@ public class Personaje extends Actor {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.X)){
-            if(this.getKi()<=7.9f){
-                velocidadRecarga = 0.1f;
+            if(this.getKi()<=7.97f){
+                velocidadRecarga = 0.03f;
 
                 this.setKi(velocidadRecarga);
                 estado = Estado.CARGANDO;
@@ -263,10 +270,10 @@ public class Personaje extends Actor {
         if(estado == Estado.CARGANDO){
             body.setLinearVelocity(0,0);
             if(direccion == Direccion.DERECHA){
-                sprite = new Sprite(new Texture("personajes/Goku/cargaR2.png"));
+                sprite = new Sprite(new Texture("personajes/Goku/cargaR1e.png"));
                 sprite.setBounds(body.getPosition().x+4, body.getPosition().y,3f , 3f );
             }else{
-                sprite = new Sprite(new Texture("personajes/Goku/cargaL.png"));
+                sprite = new Sprite(new Texture("personajes/Goku/cargaL1a.png"));
             }
             recargaKi.play();
             recargaKi.setVolume(0.03f);
@@ -298,7 +305,7 @@ public class Personaje extends Actor {
             andando2 = new Texture("personajes/Goku/animacion2/walkinggoku2.png");
             kamehamehaTextureR = new Texture("personajes/Goku/kamehameha/kamehamehaR.png");
             kamehamehaTextureL = new Texture("personajes/Goku/kamehameha/kamehamehaL.png");
-            cargandoR = new Texture("personajes/Goku/animacioncargaR/cargando.png");
+            cargandoR = new Texture("personajes/Goku/cargaR1.png");
 
             sprite = new Sprite(standr);
 
@@ -382,10 +389,6 @@ public class Personaje extends Actor {
 
     public ArrayList <Onda> getListaOndas(){
         return listaOndas;
-    }
-
-    public Boolean getcolision() {
-        return colision;
     }
 
     public void setKi(float cantKi){

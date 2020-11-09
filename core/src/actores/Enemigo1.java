@@ -15,12 +15,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.Timer;
 
-public class Enemigo extends Actor {
+public class Enemigo1 extends Actor {
+
+    public enum Direccion{ DERECHA, IZQUIERDA}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO}
 
     private World world;
     public Body body;
     private Sprite sprite;
     private Texture staticSaibaman, animacionWalking1,animacionWalking2,animacionFalling1,animacionFalling2, rafagaR, rafagaL;
+
+    private Direccion direccion;
+    private Estado estado;
 
     private Animation walkAnimation;
     private TextureRegion[]walkFrames;
@@ -39,13 +45,15 @@ public class Enemigo extends Actor {
 
     private float posInicialX, crono, controladorTiempo;
 
-    public Enemigo(World mundo, int x, int y, int idEnemigo){
+    public Enemigo1(World mundo, int x, int y, int idEnemigo){
         this.world = mundo;
 
         this.idEnemigo = idEnemigo;
 
         this.x = x;
         this.y = y;
+
+        direccion = Direccion.DERECHA;
 
         crono = 0;
         controladorTiempo = 1;
@@ -104,28 +112,28 @@ public class Enemigo extends Actor {
 
         if(body.getPosition().x<164){
 
-            if(body.getPosition().x < b && ida == true){
+            if(body.getPosition().x < b && direccion == Direccion.DERECHA){
                 body.setLinearVelocity(3,0);
             }else{
-                ida = false;
+                direccion = Direccion.IZQUIERDA;
             }
-            if(body.getPosition().x>posInicialX && ida == false){
+            if(body.getPosition().x>posInicialX && direccion == Direccion.IZQUIERDA){
                 body.setLinearVelocity(-3,0);
             }else{
-                ida = true;
+                direccion = Direccion.DERECHA;
             }
 
         }else{
-            if(body.getPosition().x<b   && ida == true){
+            if(body.getPosition().x<b   && direccion == Direccion.DERECHA){
                 body.setLinearVelocity(3,0);
             }else{
-                ida = false;
+                direccion = Direccion.IZQUIERDA;
             }
 
-            if(body.getPosition().x>a && ida == false){
+            if(body.getPosition().x>a && direccion == Direccion.IZQUIERDA){
                 body.setLinearVelocity(-3,0);
             }else{
-                ida = true;
+                direccion = Direccion.DERECHA;
             }
         }
 
@@ -133,7 +141,7 @@ public class Enemigo extends Actor {
 
     public void animacionAcciones(float elapsedTime, Personaje personaje){
 
-        if(ida == true && vidas>0){
+        if(direccion == Direccion.DERECHA && vidas>0){
 
             tmp = TextureRegion.split(animacionWalking1,37,58);
 
@@ -153,7 +161,7 @@ public class Enemigo extends Actor {
 
             sprite = new Sprite(currentWalkFrame);
 
-        }else if(ida == false && vidas<0){
+        }else if(direccion == Direccion.IZQUIERDA && vidas<0){
 
             tmp = TextureRegion.split(animacionWalking2,37,58);
 
@@ -175,7 +183,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(vidas == 0 && ida == true){
+        if(vidas == 0 && direccion == Direccion.DERECHA){
 
             tmp = TextureRegion.split(animacionFalling1,48,58);
 
@@ -199,7 +207,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(vidas == 0 && ida == false){
+        if(vidas == 0 && direccion == Direccion.IZQUIERDA){
 
             tmp = TextureRegion.split(animacionFalling2,56,62);
 
@@ -243,7 +251,7 @@ public class Enemigo extends Actor {
 
     public void setDistanciaEnemigo(float posicionEnemigo){
 
-            distanciaEnemigo = Math.round(this.body.getPosition().x - posicionEnemigo);
+        distanciaEnemigo = Math.round(this.body.getPosition().x - posicionEnemigo);
 
     }
 
@@ -264,3 +272,4 @@ public class Enemigo extends Actor {
     }
 
 }
+

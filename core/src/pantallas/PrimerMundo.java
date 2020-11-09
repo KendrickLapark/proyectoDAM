@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import actores.Capsula;
 import actores.Enemigo;
+import actores.Enemigo1;
 import actores.Personaje;
 import input.Teclado;
 import objetos.Onda;
@@ -50,7 +51,7 @@ public class PrimerMundo implements Screen {
     private Texture blank;
 
     private Personaje p1;
-    private Enemigo e1;
+    private Enemigo1 e1;
     private Capsula c1;
     private ArrayList<Onda> ondasToDestroy;
 
@@ -79,7 +80,7 @@ public class PrimerMundo implements Screen {
         blank = new Texture("recursos/blank.png");
 
         p1 = new Personaje(world, 1);
-        e1 = new Enemigo(world,30,43,1);
+        e1 = new Enemigo1(world,30,43,1);
         c1 = new Capsula(world, p1,"Objetos/capsule.png", 6,6);
         ondasToDestroy = new ArrayList<>();
 
@@ -212,7 +213,7 @@ public class PrimerMundo implements Screen {
 
         orthogonalTiledMapRenderer.render();
 
-        box2DDebugRenderer.render(world, orthographicCamera.combined);
+        //box2DDebugRenderer.render(world, orthographicCamera.combined);
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
         juego.getSpriteBatch().begin();
@@ -223,16 +224,13 @@ public class PrimerMundo implements Screen {
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
 
-
         System.out.println("Posicion d eY"+p1.getCuerpo().getPosition().y);
 
-
-
-        e1.animacionAcciones(elapsedTime);
+        e1.animacionAcciones(elapsedTime, p1);
         e1.draw(juego.getSpriteBatch(),0);
+        e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
 
         c1.draw(juego.getSpriteBatch(),0);
-
 
         //DEBUGS
 
