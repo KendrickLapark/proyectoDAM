@@ -24,7 +24,7 @@ import objetos.Onda;
 public class Personaje extends Actor {
 
     public enum Direccion{ DERECHA, IZQUIERDA}
-    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO}
 
     private World world;
     private Sprite sprite;
@@ -127,6 +127,10 @@ public class Personaje extends Actor {
 
     public void actualizarEstado(){
 
+        if(body.getPosition().y<0){
+            estado = Estado.MUERTO;
+        }
+
         if(body.getLinearVelocity().x == 0 && body.getLinearVelocity().y == 0){
             estado = Estado.QUIETO;
         }
@@ -168,6 +172,10 @@ public class Personaje extends Actor {
     }
 
     public void animaciones(float elapsedTime){
+
+        if(estado == Estado.MUERTO){
+            System.exit(0);
+        }
 
         if(estado == Estado.QUIETO && rafagazo==false){
             if(direccion == Direccion.DERECHA){

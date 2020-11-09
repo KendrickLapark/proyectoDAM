@@ -74,7 +74,7 @@ public class PrimerMundo implements Screen {
         this.personajeSeleccionado = personajeSeleccionado;
         orthographicCamera = new OrthographicCamera(20,20);
         world = new World(new Vector2(0,-9.8f),true);
-        map = new TmxMapLoader().load("mapa/mapav2.tmx");
+        map = new TmxMapLoader().load("mapa/mapav7.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
         blank = new Texture("recursos/blank.png");
 
@@ -94,7 +94,7 @@ public class PrimerMundo implements Screen {
 
         orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
 
-        orthographicCamera.zoom = 0.9f;
+        orthographicCamera.zoom = 1;
 
         teclado = new Teclado(world, p1);
         Gdx.input.setInputProcessor(teclado);
@@ -219,6 +219,10 @@ public class PrimerMundo implements Screen {
 
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
+
+
+        System.out.println("Posicion d eY"+p1.getCuerpo().getPosition().y);
+
 
 
         e1.animacionAcciones(elapsedTime);
