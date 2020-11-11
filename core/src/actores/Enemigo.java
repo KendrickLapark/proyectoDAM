@@ -17,29 +17,28 @@ import java.util.Timer;
 
 public class Enemigo extends Actor {
 
+    public enum Direccion{ DERECHA, IZQUIERDA}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO}
+
     private World world;
     public Body body;
     private Sprite sprite;
-    private Texture staticSaibaman, animacionWalking1,animacionWalking2,animacionFalling1,animacionFalling2, rafagaR, rafagaL;
+    private Texture staticSaibaman, animacionWalking1,animacionWalking2,animacionFalling1,animacionFalling2, rafagaR, rafagaL, deadR, deadL;
+
+    private Enemigo.Direccion direccion;
+    private Enemigo.Estado estado;
 
     private Animation walkAnimation;
     private TextureRegion[]walkFrames;
     private TextureRegion[][]tmp;
     TextureRegion currentWalkFrame;
 
-    private boolean ida;
-
     public int vidas, distanciaEnemigo, idEnemigo, x, y;
-
-    public static float tiempo;
-
-    public static int tiempototal;
-
-    private Timer timer;
 
     private float posInicialX, crono, controladorTiempo;
 
     public Enemigo(World mundo, int x, int y, int idEnemigo){
+
         this.world = mundo;
 
         this.idEnemigo = idEnemigo;
@@ -47,13 +46,14 @@ public class Enemigo extends Actor {
         this.x = x;
         this.y = y;
 
+        direccion = Direccion.DERECHA;
+        estado = Estado.ANDANDO;
+
         crono = 0;
         controladorTiempo = 1;
 
         cargaTexturas();
         propiedadesFisicas();
-
-        ida = true;
 
         vidas = 3;
 
@@ -80,20 +80,17 @@ public class Enemigo extends Actor {
     public void draw(Batch batch, float parentAlpha) {
 
         if(vidas == 0){
-            sprite.setBounds(body.getPosition().x-0.6f, body.getPosition().y-1,1.3f , 1.3f );
+            sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.1f , 1.1f );
+            sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - 1);
             sprite.draw(batch);
-
         }else{
-            if(distanciaEnemigo>=5 ||distanciaEnemigo<=-5){
-                patrullar(x, y);
+            if(estado != Estado.RAFAGA){
+                patrullar(x,y);
             }
             sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.3f , 1.3f );
             sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - sprite.getHeight() / 2);
             sprite.draw(batch);
-
-
         }
-
 
     }
 
@@ -104,28 +101,28 @@ public class Enemigo extends Actor {
 
         if(body.getPosition().x<164){
 
-            if(body.getPosition().x < b && ida == true){
+            if(body.getPosition().x < b && direccion == Direccion.DERECHA){
                 body.setLinearVelocity(3,0);
             }else{
-                ida = false;
+                direccion = Direccion.IZQUIERDA;
             }
-            if(body.getPosition().x>posInicialX && ida == false){
+            if(body.getPosition().x>posInicialX && direccion == Direccion.IZQUIERDA){
                 body.setLinearVelocity(-3,0);
             }else{
-                ida = true;
+                direccion = Direccion.DERECHA;
             }
 
         }else{
-            if(body.getPosition().x<b   && ida == true){
+            if(body.getPosition().x<b   && direccion == Direccion.DERECHA){
                 body.setLinearVelocity(3,0);
             }else{
-                ida = false;
+                direccion = Direccion.IZQUIERDA;
             }
 
-            if(body.getPosition().x>a && ida == false){
+            if(body.getPosition().x>a && direccion == Direccion.IZQUIERDA){
                 body.setLinearVelocity(-3,0);
             }else{
-                ida = true;
+                direccion = Direccion.DERECHA;
             }
         }
 
@@ -133,7 +130,8 @@ public class Enemigo extends Actor {
 
     public void animacionAcciones(float elapsedTime, Personaje personaje){
 
-        if(ida == true && vidas>0){
+
+        if(estado == Estado.ANDANDO && direccion == Direccion.DERECHA){
 
             tmp = TextureRegion.split(animacionWalking1,37,58);
 
@@ -153,7 +151,8 @@ public class Enemigo extends Actor {
 
             sprite = new Sprite(currentWalkFrame);
 
-        }else if(ida == false && vidas<0){
+        }
+        if(estado == Estado.ANDANDO && direccion == Direccion.IZQUIERDA){
 
             tmp = TextureRegion.split(animacionWalking2,37,58);
 
@@ -175,68 +174,40 @@ public class Enemigo extends Actor {
 
         }
 
-        if(vidas == 0 && ida == true){
+        if(vidas == 0 && personaje.getCuerpo().getPosition().x < body.getPosition().x){
 
-            tmp = TextureRegion.split(animacionFalling1,48,58);
-
-            walkFrames = new TextureRegion[4];
-
-            int index = 0;
-
-            for(int i = 0; i<4;i++){
-                for(int j = 0; j<1;j++){
-                    walkFrames[index++] = tmp[j][i];
-                }
-            }
-
-            walkAnimation = new Animation(0.00009f,walkFrames);
-
-            currentWalkFrame = (TextureRegion)walkAnimation.getKeyFrame((elapsedTime),false);
-
-            sprite = new Sprite(currentWalkFrame);
+            sprite = new Sprite(deadL);
 
             body.setLinearVelocity(0,0);
 
         }
 
-        if(vidas == 0 && ida == false){
+        if(vidas == 0 && personaje.getCuerpo().getPosition().x > body.getPosition().x){
 
-            tmp = TextureRegion.split(animacionFalling2,56,62);
 
-            walkFrames = new TextureRegion[4];
-
-            int index = 0;
-
-            for(int i = 3; i>=0;i--){
-                for(int j = 0; j<1;j++){
-                    walkFrames[index++] = tmp[j][i];
-                }
-            }
-
-            walkAnimation = new Animation(0.02f,walkFrames);
-
-            currentWalkFrame = (TextureRegion)walkAnimation.getKeyFrame((elapsedTime),false);
-
-            sprite = new Sprite(currentWalkFrame);
+            sprite = new Sprite(deadR);
 
             body.setLinearVelocity(0,0);
 
         }
 
-        if(distanciaEnemigo<5 || distanciaEnemigo<-5){
-
+        if(distanciaEnemigo > -5 && distanciaEnemigo<0){
             System.out.println("Distancia al enemigo ===="+distanciaEnemigo);
 
+            estado = Enemigo.Estado.RAFAGA;
             body.setLinearVelocity(0,0);
-
             if(personaje.getCuerpo().getPosition().x > body.getPosition().x){
                 sprite = new Sprite(rafagaR);
             }
+        }else if(distanciaEnemigo<5 && distanciaEnemigo>0){
 
+            estado = Enemigo.Estado.RAFAGA;
+            body.setLinearVelocity(0,0);
             if(personaje.getCuerpo().getPosition().x < body.getPosition().x){
                 sprite = new Sprite(rafagaL);
             }
-
+        }else{
+            estado = Estado.ANDANDO;
         }
 
     }
@@ -259,8 +230,17 @@ public class Enemigo extends Actor {
             animacionFalling2 = new Texture("personajes/Saibaman/saibamanfallingL.png");
             rafagaR = new Texture("personajes/Saibaman/saibamanRafagaR.png");
             rafagaL = new Texture("personajes/Saibaman/saibamanRafagaL.png");
+            deadR = new Texture("personajes/Saibaman/deadR.png");
+            deadL = new Texture("personajes/Saibaman/deadL.png");
         }
 
     }
 
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public int getDistanciaEnemigo() {
+        return distanciaEnemigo;
+    }
 }
