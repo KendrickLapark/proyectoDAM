@@ -166,7 +166,7 @@ public class Personaje extends Actor {
             estado = Estado.RAFAGA;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.X)){
+        if(estado !=Estado.AIRE && Gdx.input.isKeyPressed(Input.Keys.X)){
             if(this.getKi()<=7.97f){
                 velocidadRecarga = 0.03f;
 
@@ -403,5 +403,9 @@ public class Personaje extends Actor {
 
     public Rectangle getHitBox(){
         return sprite.getBoundingRectangle();
+    }
+
+    public void setSalud(int salud) {
+        this.salud -= salud;
     }
 }

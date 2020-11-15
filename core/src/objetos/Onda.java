@@ -20,7 +20,8 @@ public class Onda extends Actor {
     private Sprite sprite;
     private World world;
 
-    private Personaje pj1;
+    private Personaje personaje;
+    private Enemigo enemigo;
 
     private boolean colision;
 
@@ -28,16 +29,38 @@ public class Onda extends Actor {
 
     public float velocidadOriginal;
 
+    public Onda(World m, Enemigo e1){
+
+        this.world = m;
+        this.enemigo =  e1;
+
+        fisica2();
+
+        if (enemigo.getDireccion() == Enemigo.Direccion.DERECHA) {
+            body.setLinearVelocity(8, 0);
+            sprite = new Sprite(new Texture("Objetos/ondaSR.png"));
+        } else {
+            body.setLinearVelocity(-8, 0);
+            sprite = new Sprite(new Texture("Objetos/ondaSL.png"));
+        }
+
+        velocidadOriginal = body.getLinearVelocity().x;
+
+        if (this.body.getLinearVelocity().x != velocidadOriginal) {
+            this.body.setActive(false);
+        }
+
+    }
 
     public Onda(World m, Personaje p1){
 
         this.world = m;
-        this.pj1 = p1;
+        this.personaje = p1;
 
 
         fisica();
 
-        if (pj1.getDireccion() == Personaje.Direccion.DERECHA) {
+        if (personaje.getDireccion() == Personaje.Direccion.DERECHA) {
             body.setLinearVelocity(8, 0);
             sprite = new Sprite(new Texture("Objetos/ondaR.png"));
         } else {
@@ -58,10 +81,10 @@ public class Onda extends Actor {
 
     public void fisica(){
         BodyDef bodyDef = new BodyDef();
-        if(pj1.getDireccion() == Personaje.Direccion.DERECHA){
-            bodyDef.position.set(pj1.getCuerpo().getPosition().x+0.7f,pj1.getCuerpo().getPosition().y);
+        if(personaje.getDireccion() == Personaje.Direccion.DERECHA){
+            bodyDef.position.set(personaje.getCuerpo().getPosition().x+0.7f,personaje.getCuerpo().getPosition().y);
         }else{
-            bodyDef.position.set(pj1.getCuerpo().getPosition().x-0.7f,pj1.getCuerpo().getPosition().y);
+            bodyDef.position.set(personaje.getCuerpo().getPosition().x-0.7f,personaje.getCuerpo().getPosition().y);
         }
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -75,6 +98,27 @@ public class Onda extends Actor {
         body.createFixture(fixtureDef);
         body.setGravityScale(0.0f);
     }
+
+    public void fisica2(){
+        BodyDef bodyDef = new BodyDef();
+        if(enemigo.getDireccion() == Enemigo.Direccion.DERECHA){
+            bodyDef.position.set(enemigo.getBody().getPosition().x+0.8f,enemigo.getBody().getPosition().y);
+        }else{
+            bodyDef.position.set(enemigo.getBody().getPosition().x-0.8f,enemigo.getBody().getPosition().y);
+        }
+
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(0.1f);
+        fixtureDef.shape = circleShape;
+        fixtureDef.density=1f;
+        body.createFixture(fixtureDef);
+        body.setGravityScale(0.0f);
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

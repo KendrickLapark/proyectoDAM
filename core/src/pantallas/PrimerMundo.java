@@ -50,7 +50,7 @@ public class PrimerMundo implements Screen {
     private Texture blank;
 
     private Personaje p1;
-    private Enemigo e1;
+    private Enemigo e1, e2, e3;
     private Capsula c1;
     private ArrayList<Onda> ondasToDestroy;
 
@@ -61,7 +61,7 @@ public class PrimerMundo implements Screen {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     private int personajeSeleccionado;
-    private float velocidadRecarga;
+    private float velocidadRecarga, tiempoContador;
 
     float elapsedTime;
 
@@ -78,9 +78,13 @@ public class PrimerMundo implements Screen {
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
         blank = new Texture("recursos/blank.png");
 
+        tiempoContador = 0;
+
         p1 = new Personaje(world, 1);
-        e1 = new Enemigo(world,30,43,1);
-        c1 = new Capsula(world, p1,"Objetos/capsule.png", 6,6);
+        e1 = new Enemigo(world,30,43,1, 10, 2.6f);
+        e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
+        e3 = new Enemigo(world, 65, 80,1,70,2.6f);
+        c1 = new Capsula(world, p1,"Objetos/capsule.png", 11,11);
         ondasToDestroy = new ArrayList<>();
 
         Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
@@ -118,6 +122,22 @@ public class PrimerMundo implements Screen {
 
                 for(int i = 0; i<p1.getListaOndas().size();i++){
 
+                    if( contact.getFixtureA().getBody() == p1.getListaOndas().get(i).getCuerpo() && contact.getFixtureB().getBody() == e1.getListaOndas().get(i).getCuerpo()){
+
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        ondasToDestroy.add(e1.getListaOndas().get(i));
+                        e1.getListaOndas().remove(i);
+                        p1.getListaOndas().remove(i);
+
+                    }
+
+                    if(contact.getFixtureA().getBody() == rectanguloSuelo && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        p1.getListaOndas().remove(i);
+                    }
+
+                    //METODO PARA ELIMINAR UNA ONDA Y LA ANTERIOR DENTRO DEL ARRAYLIST CUANDO COLISIONAN
+
                     if(i >= 1 &&  contact.getFixtureA().getBody()==p1.getListaOndas().get(i-1).getCuerpo()&&
                             contact.getFixtureB().getBody()==p1.getListaOndas().get(i).getCuerpo()){
                         System.out.println("SE HA BORRADO");
@@ -143,18 +163,48 @@ public class PrimerMundo implements Screen {
 
                     }
 
-                    if(contact.getFixtureA().getBody() == rectanguloSuelo && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
-                        ondasToDestroy.add(p1.getListaOndas().get(i));
-                        p1.getListaOndas().remove(i);
-                    }
+
 
                 }
 
-                /*if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == plataforma.getCuerpo()){
-                    System.out.println("En la plataforma");
-                    p1.getEstado() = Personaje.Estado.ENPLATAFORMA;
-                }*/
+                for(int j = 0 ; j<e1.getListaOndas().size();j++){
 
+                    if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e1.getListaOndas().get(j).getCuerpo()){
+
+                        ondasToDestroy.add(e1.getListaOndas().get(j));
+                        e1.getListaOndas().remove(j);
+                    }
+
+
+                    if(e1.getListaOndas().size() !=0 ){
+                        if(e1.getListaOndas().get(j).getCuerpo().getPosition().x<3){
+                            ondasToDestroy.add(e1.getListaOndas().get(j));
+                            e1.getListaOndas().remove(j);
+                        }
+                    }
+
+
+                    if(e1.getListaOndas().size() != 0){
+
+                        if( contact.getFixtureA().getBody() == e1.getListaOndas().get(j).getCuerpo() && contact.getFixtureB().getBody() == p1.getListaOndas().get(j).getCuerpo()){
+
+                            ondasToDestroy.add(e1.getListaOndas().get(j));
+                            ondasToDestroy.add(p1.getListaOndas().get(j));
+                            e1.getListaOndas().remove(j);
+                            p1.getListaOndas().remove(j);
+
+                        }
+
+                    }
+
+
+                    if(contact.getFixtureA().getBody() == rectanguloSuelo &&  contact.getFixtureB().getBody() == e1.getListaOndas().get(j).getCuerpo()){
+
+                        ondasToDestroy.add(e1.getListaOndas().get(j));
+                        e1.getListaOndas().remove(j);
+                    }
+
+                }
 
 
                 Gdx.app.postRunnable(new Runnable() {
@@ -212,7 +262,7 @@ public class PrimerMundo implements Screen {
 
         orthogonalTiledMapRenderer.render();
 
-        //box2DDebugRenderer.render(world, orthographicCamera.combined);
+        box2DDebugRenderer.render(world, orthographicCamera.combined);
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
         juego.getSpriteBatch().begin();
@@ -229,8 +279,16 @@ public class PrimerMundo implements Screen {
         e1.draw(juego.getSpriteBatch(),0);
         e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
 
-        System.out.println("Enemigo ESTADOOOOOOOOOOOOOOOO---------------------->"+e1.getEstado());
-        System.out.println("DISTANCIA ENEMIGO__________________________"+e1.getDistanciaEnemigo());
+
+        e2.animacionAcciones(elapsedTime,p1);
+        e2.draw(juego.getSpriteBatch(),0);
+        e2.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        e3.animacionAcciones(elapsedTime,p1);
+        e3.draw(juego.getSpriteBatch(),0);
+        e3.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
         c1.draw(juego.getSpriteBatch(),0);
 
