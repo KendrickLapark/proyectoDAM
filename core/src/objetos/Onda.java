@@ -27,12 +27,14 @@ public class Onda extends Actor {
 
     public Body body;
 
-    public float velocidadOriginal;
+    public float velocidadOriginal,tiempoVida;
 
     public Onda(World m, Enemigo e1){
 
         this.world = m;
         this.enemigo =  e1;
+
+        tiempoVida = 0;
 
         fisica2();
 
@@ -57,7 +59,6 @@ public class Onda extends Actor {
         this.world = m;
         this.personaje = p1;
 
-
         fisica();
 
         if (personaje.getDireccion() == Personaje.Direccion.DERECHA) {
@@ -73,7 +74,6 @@ public class Onda extends Actor {
         if (this.body.getLinearVelocity().x != velocidadOriginal) {
             this.body.setActive(false);
         }
-
 
         System.out.println("La velocidad original de la onda es: "+velocidadOriginal);
 
@@ -119,6 +119,14 @@ public class Onda extends Actor {
         body.setGravityScale(0.0f);
     }
 
+    public void cicloVida(){
+
+        tiempoVida+= Gdx.graphics.getDeltaTime();
+    }
+
+    public float getTiempoVida() {
+        return tiempoVida;
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -158,5 +166,6 @@ public class Onda extends Actor {
     public Body getCuerpo(){
         return body;
     }
+
 
 }

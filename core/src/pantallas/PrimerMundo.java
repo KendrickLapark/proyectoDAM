@@ -53,6 +53,8 @@ public class PrimerMundo implements Screen {
     private Enemigo e1, e2, e3;
     private Capsula c1;
     private ArrayList<Onda> ondasToDestroy;
+    private ArrayList<Onda> ondasMundo;
+    private ArrayList<Enemigo> listaEnemigos;
 
     private Music musica;
 
@@ -80,10 +82,17 @@ public class PrimerMundo implements Screen {
 
         tiempoContador = 0;
 
+        listaEnemigos =  new ArrayList<>();
+
         p1 = new Personaje(world, 1);
-        e1 = new Enemigo(world,30,43,1, 10, 2.6f);
+        e1 = new Enemigo(world,8,12,1, 10, 6.3f);
         e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
         e3 = new Enemigo(world, 65, 80,1,70,2.6f);
+
+        listaEnemigos.add(e1);
+        listaEnemigos.add(e2);
+        listaEnemigos.add(e3);
+
         c1 = new Capsula(world, p1,"Objetos/capsule.png", 11,11);
         ondasToDestroy = new ArrayList<>();
 
@@ -122,36 +131,20 @@ public class PrimerMundo implements Screen {
 
                 for(int i = 0; i<p1.getListaOndas().size();i++){
 
-                    if( contact.getFixtureA().getBody() == p1.getListaOndas().get(i).getCuerpo() && contact.getFixtureB().getBody() == e1.getListaOndas().get(i).getCuerpo()){
-
-                        ondasToDestroy.add(p1.getListaOndas().get(i));
-                        ondasToDestroy.add(e1.getListaOndas().get(i));
-                        e1.getListaOndas().remove(i);
-                        p1.getListaOndas().remove(i);
-
-                    }
-
-                    if(contact.getFixtureA().getBody() == rectanguloSuelo && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
+                    if(p1.getListaOndas().get(i).getCuerpo().getPosition().x < 3){
                         ondasToDestroy.add(p1.getListaOndas().get(i));
                         p1.getListaOndas().remove(i);
                     }
 
-                    //METODO PARA ELIMINAR UNA ONDA Y LA ANTERIOR DENTRO DEL ARRAYLIST CUANDO COLISIONAN
+                    for(int k = 0; k<listaEnemigos.size();k++){
 
-                    if(i >= 1 &&  contact.getFixtureA().getBody()==p1.getListaOndas().get(i-1).getCuerpo()&&
-                            contact.getFixtureB().getBody()==p1.getListaOndas().get(i).getCuerpo()){
-                        System.out.println("SE HA BORRADO");
-                        ondasToDestroy.add(p1.getListaOndas().get(i));
-                        ondasToDestroy.add(p1.getListaOndas().get(i-1));
-                        p1.getListaOndas().remove(i);
-                        p1.getListaOndas().remove(i-1);
-                    }
+                        if(contact.getFixtureA().getBody() == listaEnemigos.get(k).body && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
+                            System.out.println("Impacto");
+                            ondasToDestroy.add(p1.getListaOndas().get(i));
+                            p1.getListaOndas().remove(i);
+                            listaEnemigos.get(k).vidas--;
 
-                    if(contact.getFixtureA().getBody() == e1.body && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
-                        System.out.println("Impacto");
-                        ondasToDestroy.add(p1.getListaOndas().get(i));
-                        p1.getListaOndas().remove(i);
-                        e1.vidas--;
+                        }
 
                     }
 
@@ -160,48 +153,23 @@ public class PrimerMundo implements Screen {
                         ondasToDestroy.add(p1.getListaOndas().get(i));
                         p1.getListaOndas().remove(i);
                         e1.vidas--;
-
+                        
                     }
-
-
 
                 }
 
-                for(int j = 0 ; j<e1.getListaOndas().size();j++){
+                for(Enemigo e: listaEnemigos){
 
-                    if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e1.getListaOndas().get(j).getCuerpo()){
+                    for(int i = 0; i<e.getListaOndas().size();i++){
 
-                        ondasToDestroy.add(e1.getListaOndas().get(j));
-                        e1.getListaOndas().remove(j);
-                    }
-
-
-                    if(e1.getListaOndas().size() !=0 ){
-                        if(e1.getListaOndas().get(j).getCuerpo().getPosition().x<3){
-                            ondasToDestroy.add(e1.getListaOndas().get(j));
-                            e1.getListaOndas().remove(j);
-                        }
-                    }
-
-
-                    if(e1.getListaOndas().size() != 0){
-
-                        if( contact.getFixtureA().getBody() == e1.getListaOndas().get(j).getCuerpo() && contact.getFixtureB().getBody() == p1.getListaOndas().get(j).getCuerpo()){
-
-                            ondasToDestroy.add(e1.getListaOndas().get(j));
-                            ondasToDestroy.add(p1.getListaOndas().get(j));
-                            e1.getListaOndas().remove(j);
-                            p1.getListaOndas().remove(j);
+                        if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e.getListaOndas().get(i).getCuerpo()){
+                            System.out.println("Impacto");
+                            ondasToDestroy.add(e.getListaOndas().get(i));
+                            e.getListaOndas().remove(i);
+                            p1.setSalud(-1);
 
                         }
 
-                    }
-
-
-                    if(contact.getFixtureA().getBody() == rectanguloSuelo &&  contact.getFixtureB().getBody() == e1.getListaOndas().get(j).getCuerpo()){
-
-                        ondasToDestroy.add(e1.getListaOndas().get(j));
-                        e1.getListaOndas().remove(j);
                     }
 
                 }
@@ -278,6 +246,30 @@ public class PrimerMundo implements Screen {
         e1.animacionAcciones(elapsedTime, p1);
         e1.draw(juego.getSpriteBatch(),0);
         e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        for(Enemigo e:listaEnemigos){
+
+            for(Onda o: e.getListaOndas()){
+
+                o.cicloVida();
+            }
+
+        }
+
+        for (Enemigo e: listaEnemigos){
+            for (int j = 0; j<e.getListaOndas().size();j++){
+                if(e.getListaOndas().get(j).tiempoVida>1f){
+                    ondasToDestroy.add(e.getListaOndas().get(j));
+                    e.getListaOndas().remove(j);
+                }
+            }
+        }
+
+        for(Onda o: ondasToDestroy){
+
+            o.body.setActive(false);
+
+        }
 
 
         e2.animacionAcciones(elapsedTime,p1);

@@ -102,7 +102,7 @@ public class Enemigo extends Actor {
         }else{
             if(estado != Estado.RAFAGA){
                 if(estado!=Estado.ALERTA){
-                   // patrullar(x,y);
+                    patrullar(x,y);
                 }
 
             }
