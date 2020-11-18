@@ -85,7 +85,7 @@ public class PrimerMundo implements Screen {
         listaEnemigos =  new ArrayList<>();
 
         p1 = new Personaje(world, 1);
-        e1 = new Enemigo(world,8,12,1, 10, 6.3f);
+        e1 = new Enemigo(world,8,12,1, 15, 2.6f);
         e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
         e3 = new Enemigo(world, 65, 80,1,70,2.6f);
 
@@ -129,6 +129,33 @@ public class PrimerMundo implements Screen {
             @Override
             public void beginContact(Contact contact) {
 
+                for(Enemigo e: listaEnemigos){
+
+                    for(int i = 0; i<e.getListaOndas().size();i++){
+
+                        for(int l = 0; l<p1.getListaOndas().size();l++){
+
+                            if(contact.getFixtureA().getBody() == p1.getListaOndas().get(l).getCuerpo() && contact.getFixtureB().getBody() == e.getListaOndas().get(i).getCuerpo()){
+                                ondasToDestroy.add(e.getListaOndas().get(i));
+                                ondasToDestroy.add(p1.getListaOndas().get(l));
+                                e.getListaOndas().remove(i);
+                                p1.getListaOndas().remove(l);
+                            }
+
+                        }
+
+                        if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e.getListaOndas().get(i).getCuerpo()){
+                            System.out.println("Impacto");
+                            ondasToDestroy.add(e.getListaOndas().get(i));
+                            e.getListaOndas().remove(i);
+                            p1.setSalud(-1);
+
+                        }
+
+                    }
+
+                }
+
                 for(int i = 0; i<p1.getListaOndas().size();i++){
 
                     if(p1.getListaOndas().get(i).getCuerpo().getPosition().x < 3){
@@ -158,21 +185,7 @@ public class PrimerMundo implements Screen {
 
                 }
 
-                for(Enemigo e: listaEnemigos){
 
-                    for(int i = 0; i<e.getListaOndas().size();i++){
-
-                        if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e.getListaOndas().get(i).getCuerpo()){
-                            System.out.println("Impacto");
-                            ondasToDestroy.add(e.getListaOndas().get(i));
-                            e.getListaOndas().remove(i);
-                            p1.setSalud(-1);
-
-                        }
-
-                    }
-
-                }
 
 
                 Gdx.app.postRunnable(new Runnable() {
@@ -252,6 +265,17 @@ public class PrimerMundo implements Screen {
             for(Onda o: e.getListaOndas()){
 
                 o.cicloVida();
+            }
+
+        }
+
+        for (int x = 0; x<p1.getListaOndas().size();x++){
+
+            p1.getListaOndas().get(x).cicloVida();
+
+            if(p1.getListaOndas().get(x).tiempoVida>1f){
+                ondasToDestroy.add(p1.getListaOndas().get(x));
+                p1.getListaOndas().remove(x);
             }
 
         }

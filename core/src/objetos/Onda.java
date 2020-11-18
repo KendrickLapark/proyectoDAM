@@ -69,6 +69,8 @@ public class Onda extends Actor {
             sprite = new Sprite(new Texture("Objetos/ondaL.png"));
         }
 
+        tiempoVida = 0;
+
         velocidadOriginal = body.getLinearVelocity().x;
 
         if (this.body.getLinearVelocity().x != velocidadOriginal) {
