@@ -21,7 +21,7 @@ public class Capsula extends Actor {
     private FixtureDef propiedadesFisicasCuerpo;//Definidor de las propiedades físicas del body
     private Boolean colision; // Boolean para detectar si colisiona con otros cuerpos
     private Personaje personaje;
-    private int contadorColision;
+    private int contadorColision, contPuntuacion;
 
 
     public Capsula(World world, Personaje personaje, String ruta, float x, float y){
@@ -31,6 +31,8 @@ public class Capsula extends Actor {
         sprite = new Sprite(new Texture(ruta));
 
         contadorColision = 0;
+        contPuntuacion = 0;
+
 
         colision = false;
 
@@ -80,4 +82,7 @@ public class Capsula extends Actor {
 
     }
 
+    public int getContadorColision() {
+        return contadorColision;
+    }
 }

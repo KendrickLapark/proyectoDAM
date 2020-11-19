@@ -40,10 +40,10 @@ public class Onda extends Actor {
 
         if (enemigo.getDireccion() == Enemigo.Direccion.DERECHA) {
             body.setLinearVelocity(8, 0);
-            sprite = new Sprite(new Texture("Objetos/ondaSR.png"));
+            sprite = new Sprite(new Texture("objetos/ondaSR.png"));
         } else {
             body.setLinearVelocity(-8, 0);
-            sprite = new Sprite(new Texture("Objetos/ondaSL.png"));
+            sprite = new Sprite(new Texture("objetos/ondaSL.png"));
         }
 
         velocidadOriginal = body.getLinearVelocity().x;
@@ -63,10 +63,10 @@ public class Onda extends Actor {
 
         if (personaje.getDireccion() == Personaje.Direccion.DERECHA) {
             body.setLinearVelocity(8, 0);
-            sprite = new Sprite(new Texture("Objetos/ondaR.png"));
+            sprite = new Sprite(new Texture("objetos/ondaR.png"));
         } else {
             body.setLinearVelocity(-8, 0);
-            sprite = new Sprite(new Texture("Objetos/ondaL.png"));
+            sprite = new Sprite(new Texture("objetos/ondaL.png"));
         }
 
         tiempoVida = 0;

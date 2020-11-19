@@ -1,27 +1,317 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="260" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="4">
- <tileset firstgid="1" source="Paisaje.tsx"/>
- <tileset firstgid="295" name="s" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="416" columns="26">
-  <image source="desert.jpg" width="450" height="275"/>
- </tileset>
- <layer id="1" name="Capa de patrones 1" width="260" height="11">
-  <data encoding="csv">
-14,15,16,17,18,19,20,21,22,23,24,25,26,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,26,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,14,15,16,17,18,19,20,21,22,23,24,25,26,14,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,
-14,15,16,17,18,19,20,21,22,23,24,25,26,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,14,15,16,17,18,19,20,21,22,23,24,25,26,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,26,14,15,16,17,18,19,20,21,22,23,24,25,26,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,
-14,15,16,17,18,19,20,21,22,23,24,25,26,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,14,15,16,17,18,19,20,21,22,23,24,25,26,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,14,15,16,17,18,19,20,21,22,23,24,25,26,
-1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,22,23,24,25,26,27,28,29,
-43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,64,65,66,67,68,69,70,71,
-85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,106,107,108,109,110,111,112,113,
-127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,148,149,150,151,152,153,154,155,
-169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,190,191,192,193,194,195,196,197,
-211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,232,233,234,235,236,237,238,239,
-253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,274,275,276,277,278,279,280,281,
-685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,686,687,688,689,690,691,692,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,686,687,688,689,690,691,692,693,694,685,685,685,685,685,686,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,0,0,0,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,0,0,0,685,685,685,685,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,685,685,685,685,685,685,685,685,685,685,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,710,710
-</data>
- </layer>
- <objectgroup id="2" name="suelo">
-  <object id="1" x="0.242421" y="160.303" width="1840" height="15.4545"/>
-  <object id="2" x="1888" y="160.242" width="1311.94" height="15.7576"/>
-  <object id="3" x="3248.12" y="159.94" width="911.878" height="16"/>
- </objectgroup>
-</map>
+package pantallas;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Juego;
+
+import java.util.ArrayList;
+
+import actores.Capsula;
+import actores.Enemigo;
+import actores.Personaje;
+import input.Teclado;
+import objetos.Onda;
+
+public class PrimerMundo implements Screen {
+
+    private Juego juego;
+    private World world;
+
+    private Box2DDebugRenderer box2DDebugRenderer;
+
+    private Body rectanguloSuelo;
+
+    private TiledMap map;
+
+    private Texture blank;
+
+    private Personaje p1;
+    private Enemigo e1, e2, e3;
+    private Capsula c1;
+    private ArrayList<Onda> ondasToDestroy;
+    private ArrayList<Onda> ondasMundo;
+    private ArrayList<Enemigo> listaEnemigos;
+
+    private Music musica;
+
+    private Viewport viewport;
+    private OrthographicCamera orthographicCamera;
+    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+
+    private int personajeSeleccionado;
+    private float velocidadRecarga, tiempoContador;
+
+    float elapsedTime;
+
+    private Teclado teclado;
+
+
+    public PrimerMundo(Juego loc, int personajeSeleccionado){
+
+        this.juego = loc;
+        this.personajeSeleccionado = personajeSeleccionado;
+        orthographicCamera = new OrthographicCamera(20,20);
+        world = new World(new Vector2(0,-9.8f),true);
+        map = new TmxMapLoader().load("mapa/mapav8.tmx");
+        orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
+        blank = new Texture("recursos/blank.png");
+
+        tiempoContador = 0;
+
+        listaEnemigos =  new ArrayList<>();
+
+        p1 = new Personaje(world, 1);
+        e1 = new Enemigo(world,8,12,1, 10, 6.3f);
+        e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
+        e3 = new Enemigo(world, 65, 80,1,70,2.6f);
+
+        listaEnemigos.add(e1);
+        listaEnemigos.add(e2);
+        listaEnemigos.add(e3);
+
+        c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
+        ondasToDestroy = new ArrayList<>();
+
+        Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
+
+        musica = Gdx.audio.newMusic(Gdx.files.internal("sonido/musica/dbzInicio.mp3"));
+        musica.play();
+        musica.setVolume(0.03f);
+        musica.setLooping(true);
+
+        box2DDebugRenderer = new Box2DDebugRenderer();
+
+        orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
+
+        orthographicCamera.zoom = 1;
+
+        teclado = new Teclado(world, p1);
+        Gdx.input.setInputProcessor(teclado);
+
+        for (MapObject objeto:map.getLayers().get("Suelo").getObjects()){
+            BodyDef propiedadesRectangulo= new BodyDef();
+            propiedadesRectangulo.type = BodyDef.BodyType.StaticBody;
+            rectanguloSuelo = world.createBody(propiedadesRectangulo);
+            FixtureDef propiedadesFisicasRectangulo=new FixtureDef();
+            Shape formaRectanguloSuelo=getRectangle((RectangleMapObject)objeto);
+            propiedadesFisicasRectangulo.shape = formaRectanguloSuelo;
+            propiedadesFisicasRectangulo.density = 1f;
+            rectanguloSuelo.createFixture(propiedadesFisicasRectangulo);
+
+        }
+
+        world.setContactListener(new ContactListener() {
+
+            @Override
+            public void beginContact(Contact contact) {
+
+                for(Enemigo e:listaEnemigos){
+
+                    for( int i = 0; i<e.getListaOndas().size();i++){
+
+                        if(contact.getFixtureA().getBody() == e.getListaOndas().get(i).getCuerpo() && contact.getFixtureB().getBody() == p1.getCuerpo()){
+                            ondasToDestroy.add(e.getListaOndas().get(i));
+                            e.getListaOndas().remove(i);
+                        }
+
+                    }
+
+                }
+
+                for(int i = 0; i<p1.getListaOndas().size();i++){
+
+                    if(p1.getListaOndas().get(i).getCuerpo().getPosition().x < 3){
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        p1.getListaOndas().remove(i);
+                    }
+
+                    //METODO PARA ELIMINAR UNA ONDA Y LA ANTERIOR DENTRO DEL ARRAYLIST CUANDO COLISIONAN
+                    /*if(i >= 1 &&  contact.getFixtureA().getBody()==p1.getListaOndas().get(i-1).getCuerpo()&&
+                            contact.getFixtureB().getBody()==p1.getListaOndas().get(i).getCuerpo()){
+                        System.out.println("SE HA BORRADO");
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        ondasToDestroy.add(p1.getListaOndas().get(i-1));
+                        p1.getListaOndas().remove(i);
+                        p1.getListaOndas().remove(i-1);
+                    }*/
+
+                    if(contact.getFixtureA().getBody() == e1.body && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
+                        System.out.println("Impacto");
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        p1.getListaOndas().remove(i);
+                        e1.vidas--;
+
+                    }
+
+                    if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == p1.getListaOndas().get(i).getCuerpo()){
+                        System.out.println("Impacto");
+                        ondasToDestroy.add(p1.getListaOndas().get(i));
+                        p1.getListaOndas().remove(i);
+                        e1.vidas--;
+                        
+                    }
+
+                }
+
+
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(Onda onda : ondasToDestroy){
+                            onda.body.setActive(false);
+                        }
+
+                        if(e1.vidas==0){
+                            e1.body.setActive(false);
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+        elapsedTime += Gdx.graphics.getDeltaTime();
+
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        world.step(Gdx.graphics.getDeltaTime(),6,2);
+
+        orthographicCamera.update();
+        orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
+
+        orthogonalTiledMapRenderer.setView(orthographicCamera);
+
+        orthogonalTiledMapRenderer.render();
+
+        box2DDebugRenderer.render(world, orthographicCamera.combined);
+        juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
+
+        juego.getSpriteBatch().begin();
+
+        Interface.draw(orthographicCamera);
+        //Interface.muestraKi(p1.getKi(),p1.getCuerpo().getPosition().x, p1.getCuerpo().getPosition().y, orthographicCamera);
+
+        p1.animaciones(elapsedTime);
+        p1.draw(juego.getSpriteBatch(),0);
+
+        System.out.println("Posicion d eY"+p1.getCuerpo().getPosition().y);
+
+        e1.animacionAcciones(elapsedTime, p1);
+        e1.draw(juego.getSpriteBatch(),0);
+        e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        for(Enemigo e:listaEnemigos){
+
+            for(Onda o: e.getListaOndas()){
+
+                o.cicloVida();
+            }
+
+        }
+
+        /*for (Enemigo e: listaEnemigos){
+            for (int j = 0; j<e.getListaOndas().size();j++){
+                if(e.getListaOndas().get(j).tiempoVida>1f){
+                    ondasToDestroy.add(e.getListaOndas().get(j));
+                    e.getListaOndas().remove(j);
+                }
+            }
+        }
+
+        for(Onda o: ondasToDestroy){
+
+            o.body.setActive(false);
+
+        }*/
+
+
+        e2.animacionAcciones(elapsedTime,p1);
+        e2.draw(juego.getSpriteBatch(),0);
+        e2.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        e3.animacionAcciones(elapsedTime,p1);
+        e3.draw(juego.getSpriteBatch(),0);
+        e3.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
+
+        c1.draw(juego.getSpriteBatch(),0);
+
+        //DEBUGS
+
+        /*System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
+
+        System.out.println("Estado personaje:  "+p1.getEstado());
+
+        System.out.println("Direccion personaje:  "+p1.getDireccion());
+
+        System.out.println("EL SUELO ESTA AQUI: "+p1.getPosicionSuelo());
+
+        System.out.println("POSICION DEL DICHOSO BODY Y: "+p1.getCuerpo().getPosition().y);
+
+        System.out.println("CARGANDOOOOOOOOOOOOOOOOO: "+p1.getCargando());*/
+
+        //System.out.println("Overlasps primer mundo"+p1.recoleccion(c1));
+
+        c1.recoleccion(p1);
+
+        /*System.out.println("KIKIKIKIKI"+p1.getKi());
+
+        System.out.println("COLISION??????------------------>"+c1.getColision());
+
+        System.out.println("Estado personaje:  "+p1.getEstado());*/
+
+        teclado.entrada();
+
+        juego.getSpriteBatch().setColor(Color.GRAY);
+        

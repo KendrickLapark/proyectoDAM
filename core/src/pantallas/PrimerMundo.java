@@ -62,7 +62,7 @@ public class PrimerMundo implements Screen {
     private OrthographicCamera orthographicCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private int personajeSeleccionado;
+    private int personajeSeleccionado, puntuacion;
     private float velocidadRecarga, tiempoContador;
 
     float elapsedTime;
@@ -81,6 +81,7 @@ public class PrimerMundo implements Screen {
         blank = new Texture("recursos/blank.png");
 
         tiempoContador = 0;
+        puntuacion = 0;
 
         listaEnemigos =  new ArrayList<>();
 
@@ -93,7 +94,7 @@ public class PrimerMundo implements Screen {
         listaEnemigos.add(e2);
         listaEnemigos.add(e3);
 
-        c1 = new Capsula(world, p1,"Objetos/capsule.png", 11,11);
+        c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
         ondasToDestroy = new ArrayList<>();
 
         Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
@@ -237,6 +238,7 @@ public class PrimerMundo implements Screen {
         world.step(Gdx.graphics.getDeltaTime(),6,2);
 
         orthographicCamera.update();
+
         orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
 
         orthogonalTiledMapRenderer.setView(orthographicCamera);
@@ -244,11 +246,12 @@ public class PrimerMundo implements Screen {
         orthogonalTiledMapRenderer.render();
 
         box2DDebugRenderer.render(world, orthographicCamera.combined);
+
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
         juego.getSpriteBatch().begin();
 
-        Interface.draw(orthographicCamera);
+        Interface.draw(orthographicCamera, p1.getKi(), puntuacion);
         //Interface.muestraKi(p1.getKi(),p1.getCuerpo().getPosition().x, p1.getCuerpo().getPosition().y, orthographicCamera);
 
         p1.animaciones(elapsedTime);
@@ -259,6 +262,8 @@ public class PrimerMundo implements Screen {
         e1.animacionAcciones(elapsedTime, p1);
         e1.draw(juego.getSpriteBatch(),0);
         e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+
+        System.out.println("WIDTH "+Gdx.graphics.getWidth()+" HEIGHT "+Gdx.graphics.getHeight()); //  1920 1017
 
         for(Enemigo e:listaEnemigos){
 
@@ -307,6 +312,12 @@ public class PrimerMundo implements Screen {
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
         c1.draw(juego.getSpriteBatch(),0);
+
+        if(c1.getContadorColision()==1){
+
+            puntuacion+=10;
+
+        }
 
         //DEBUGS
 
