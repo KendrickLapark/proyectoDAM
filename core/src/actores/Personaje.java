@@ -24,7 +24,7 @@ import objetos.Onda;
 public class Personaje extends Actor {
 
     public enum Direccion{ DERECHA, IZQUIERDA}
-    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO, PLATAFORMA}
 
     private World world;
     private Sprite sprite;
@@ -45,7 +45,7 @@ public class Personaje extends Actor {
     private Direccion direccion;
     private Estado estado;
 
-    private float posicionSuelo, ki, velocidadRecarga;
+    private float posicionSuelo, ki, velocidadRecarga, posXInicial, posYInicial;
 
     //private ArrayList <Onda> listaOndas;
 
@@ -55,10 +55,12 @@ public class Personaje extends Actor {
 
     private int personajeNumero, indexk, salud, contador;
 
-    public Personaje(World mundo, int personajeElegido){
+    public Personaje(World mundo, int personajeElegido, float x, float y){
 
         this.world = mundo;
 
+        posXInicial = x;
+        posYInicial = y;
 
         personajeNumero = 1;
         salud = 2;
@@ -119,7 +121,7 @@ public class Personaje extends Actor {
 
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(sprite.getX()+2,sprite.getY()+2.3f);
+        bodyDef.position.set(posXInicial,posYInicial);
         body = world.createBody(bodyDef);
 
         PolygonShape polygonShape = new PolygonShape();
@@ -133,6 +135,11 @@ public class Personaje extends Actor {
     }
 
     public void actualizarEstado(){
+
+        if(estado != Estado.PLATAFORMA){
+
+
+        }
 
         if(body.getPosition().y<0){
             estado = Estado.MUERTO;

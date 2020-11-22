@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import actores.Capsula;
 import actores.Enemigo;
 import actores.Personaje;
+import actores.Plataforma;
 import input.Teclado;
 import objetos.Onda;
 
@@ -51,10 +52,12 @@ public class PrimerMundo implements Screen {
 
     private Personaje p1;
     private Enemigo e1, e2, e3;
-    private Capsula c1;
+    private Capsula c1,c2,c3,c4,c5,c6;
+    private Plataforma pt1;
     private ArrayList<Onda> ondasToDestroy;
     private ArrayList<Onda> ondasMundo;
     private ArrayList<Enemigo> listaEnemigos;
+    private ArrayList<Capsula> listaCapsulas;
 
     private Music musica;
 
@@ -84,8 +87,12 @@ public class PrimerMundo implements Screen {
         puntuacion = 0;
 
         listaEnemigos =  new ArrayList<>();
+        listaCapsulas = new ArrayList<>();
 
-        p1 = new Personaje(world, 1);
+        p1 = new Personaje(world, 1,149,15);
+
+        pt1 = new Plataforma(world, 149,13.5f);
+
         e1 = new Enemigo(world,8,12,1, 15, 2.6f);
         e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
         e3 = new Enemigo(world, 65, 80,1,70,2.6f);
@@ -95,6 +102,16 @@ public class PrimerMundo implements Screen {
         listaEnemigos.add(e3);
 
         c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
+        c2 = new Capsula(world,p1,"objetos/capsule.png",33,7);
+        c3 = new Capsula(world,p1,"objetos/capsule.png",54,7);
+        c4 = new Capsula(world,p1,"objetos/capsule.png",119,10);
+
+
+        listaCapsulas.add(c1);
+        listaCapsulas.add(c2);
+        listaCapsulas.add(c3);
+        listaCapsulas.add(c4);
+
         ondasToDestroy = new ArrayList<>();
 
         Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
@@ -263,6 +280,8 @@ public class PrimerMundo implements Screen {
         e1.draw(juego.getSpriteBatch(),0);
         e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
 
+        pt1.draw(juego.getSpriteBatch(),0);
+
         System.out.println("WIDTH "+Gdx.graphics.getWidth()+" HEIGHT "+Gdx.graphics.getHeight()); //  1920 1017
 
         for(Enemigo e:listaEnemigos){
@@ -311,13 +330,24 @@ public class PrimerMundo implements Screen {
 
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
-        c1.draw(juego.getSpriteBatch(),0);
 
-        if(c1.getContadorColision()==1){
 
-            puntuacion+=10;
+
+        for(Capsula c : listaCapsulas){
+
+            c.draw(juego.getSpriteBatch(),0);
+
+            if(c.getContadorColision()==1){
+
+                puntuacion+=10;
+
+            }
+
+            c.recoleccion(p1);
 
         }
+
+
 
         //DEBUGS
 
@@ -335,7 +365,7 @@ public class PrimerMundo implements Screen {
 
         //System.out.println("Overlasps primer mundo"+p1.recoleccion(c1));
 
-        c1.recoleccion(p1);
+        //c1.recoleccion(p1);
 
         /*System.out.println("KIKIKIKIKI"+p1.getKi());
 
