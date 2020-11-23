@@ -211,7 +211,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(distanciaEnemigo > -10 && distanciaEnemigo<=0 && vidas != 0){
+        if(distanciaEnemigo > -7 && distanciaEnemigo<=0 && vidas != 0){
 
             tiempo += Gdx.graphics.getDeltaTime();
             direccionPrevia = direccion;
@@ -230,7 +230,7 @@ public class Enemigo extends Actor {
                 }
                 direccion = direccionPrevia;
             }
-        }else if(distanciaEnemigo<10 && distanciaEnemigo>0 && vidas != 0){
+        }else if(distanciaEnemigo<7 && distanciaEnemigo>0 && vidas != 0){
 
             tiempo += Gdx.graphics.getDeltaTime();
             direccionPrevia = direccion;

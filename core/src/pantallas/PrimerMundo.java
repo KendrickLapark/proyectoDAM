@@ -51,7 +51,7 @@ public class PrimerMundo implements Screen {
     private Texture blank;
 
     private Personaje p1;
-    private Enemigo e1, e2, e3;
+    private Enemigo e1, e2, e3, e4, e5, e6;
     private Capsula c1,c2,c3,c4,c5,c6;
     private Plataforma pt1;
     private ArrayList<Onda> ondasToDestroy;
@@ -96,16 +96,21 @@ public class PrimerMundo implements Screen {
         e1 = new Enemigo(world,8,12,1, 15, 2.6f);
         e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
         e3 = new Enemigo(world, 65, 80,1,70,2.6f);
+        e4 = new Enemigo(world, 124, 133,1,130,9.6f);
+        e5 = new Enemigo(world,148,162, 1,150,2.6f);
+        e6 = new Enemigo(world,165,180,1,171, 14.6f);
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
         listaEnemigos.add(e3);
+        listaEnemigos.add(e4);
+        listaEnemigos.add(e5);
+        listaEnemigos.add(e6);
 
         c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
         c2 = new Capsula(world,p1,"objetos/capsule.png",33,7);
         c3 = new Capsula(world,p1,"objetos/capsule.png",54,7);
         c4 = new Capsula(world,p1,"objetos/capsule.png",119,10);
-
 
         listaCapsulas.add(c1);
         listaCapsulas.add(c2);
@@ -276,15 +281,19 @@ public class PrimerMundo implements Screen {
 
         System.out.println("Posicion d eY"+p1.getCuerpo().getPosition().y);
 
-        e1.animacionAcciones(elapsedTime, p1);
+        /*e1.animacionAcciones(elapsedTime, p1);
         e1.draw(juego.getSpriteBatch(),0);
-        e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+        e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);*/
 
         pt1.draw(juego.getSpriteBatch(),0);
 
         System.out.println("WIDTH "+Gdx.graphics.getWidth()+" HEIGHT "+Gdx.graphics.getHeight()); //  1920 1017
 
         for(Enemigo e:listaEnemigos){
+
+            e.animacionAcciones(elapsedTime, p1);
+            e.draw(juego.getSpriteBatch(), 0);
+            e.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
 
             for(Onda o: e.getListaOndas()){
 
@@ -320,18 +329,15 @@ public class PrimerMundo implements Screen {
         }
 
 
-        e2.animacionAcciones(elapsedTime,p1);
+        /*e2.animacionAcciones(elapsedTime,p1);
         e2.draw(juego.getSpriteBatch(),0);
         e2.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
 
         e3.animacionAcciones(elapsedTime,p1);
         e3.draw(juego.getSpriteBatch(),0);
-        e3.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
+        e3.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);*/
 
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
-
-
-
 
         for(Capsula c : listaCapsulas){
 
