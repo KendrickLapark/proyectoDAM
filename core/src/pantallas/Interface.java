@@ -19,13 +19,15 @@ public class Interface {
     private static Vector3 vector3 = new Vector3();
     private static Vector3 vector31 = new Vector3();
     private static Vector3 vector32 = new Vector3();
+    private static Vector3 vector33 = new Vector3();
+
 
     public static void SetSpriteBatch(SpriteBatch batch, float cantKi){
         spriteBatch = batch;
         ki = cantKi;
     }
 
-    public static void draw (OrthographicCamera camara, float ki, int puntuacion){
+    public static void draw (OrthographicCamera camara, float ki, int salud, int puntuacion){
 
         tiempototal = 300;
 
@@ -44,24 +46,31 @@ public class Interface {
 
         bitmapFont1.draw(spriteBatch, "Tiempo: "+tiempototal , vector3.x, vector3.y);
 
-        vector31 = new Vector3(900, 200, 0);
+        vector31 = new Vector3(850, 200, 0);
         camara.unproject(vector31);
         bitmapFont1.getData().scaleX = 0.03f;
         bitmapFont1.getData().scaleY = 0.05f;
         bitmapFont1.setUseIntegerPositions(false);
 
-        bitmapFont1.draw(spriteBatch, "Puntuación: "+puntuacion , vector31.x, vector31.y);
+        bitmapFont1.draw(spriteBatch, "Salud: "+salud , vector31.x, vector31.y);
 
         int kiEntero;
 
         kiEntero = Math.round(ki);
 
         vector32 = new Vector3(500,1120,0);
-        camara.unproject(vector31);
+        camara.unproject(vector32);
 
         bitmapFont1.getData().scaleX = 0.035f;
         bitmapFont1.getData().scaleY = 0.05f;
         bitmapFont1.draw(spriteBatch, "Ki:   "+kiEntero , vector32.x, vector32.y);
+
+        vector33 = new Vector3(1500,200,0);
+        camara.unproject(vector33);
+
+        bitmapFont1.getData().scaleX = 0.035f;
+        bitmapFont1.getData().scaleY = 0.05f;
+        bitmapFont1.draw(spriteBatch, "Puntuacion:   "+puntuacion , vector33.x, vector33.y);
 
     }
 

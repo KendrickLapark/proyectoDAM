@@ -62,7 +62,7 @@ public class Personaje extends Actor {
         posXInicial = x;
         posYInicial = y;
 
-        personajeNumero = 1;
+        personajeNumero = personajeElegido;
         salud = 2;
         ki = 8;
 
@@ -75,7 +75,7 @@ public class Personaje extends Actor {
         estado = Estado.QUIETO;
         //listaOndas = new ArrayList<>();
 
-        salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
+
         caida = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/caidatrassalto.mp3"));
         kamehamehaSound = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/kamehameha.mp3"));
         recargaKi = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/recargaki.mp3"));
@@ -187,6 +187,10 @@ public class Personaje extends Actor {
 
     public void animaciones(float elapsedTime){
 
+        if(body.getPosition().y<1.2f){
+            salud = 0;
+        }
+
         if(estado == Estado.MUERTO){
             System.exit(0);
         }
@@ -211,9 +215,25 @@ public class Personaje extends Actor {
 
             if(direccion == Direccion.DERECHA){
 
-                int a = 3;
+                int a = 0;
 
-                tmp = TextureRegion.split(andando1,37,58);
+                if( personajeNumero == 1 ){
+                    a = 3;
+                    tmp = TextureRegion.split(andando1,37,58);
+                }
+
+                if( personajeNumero == 2 ){
+                    a = 2;
+                    loop = false;
+                    tmp = TextureRegion.split(andando1,35,58);
+                }
+
+                if( personajeNumero == 3){
+                    a = 2;
+                    loop = false;
+                    tmp = TextureRegion.split(andando1,39,58);
+                }
+
                 walkFrames = new TextureRegion[a];
 
                 int index = 0;
@@ -232,9 +252,25 @@ public class Personaje extends Actor {
 
             }else{
 
-                int a = 3;
+                int a = 0;
 
-                tmp = TextureRegion.split(andando2,37,58);
+                if( personajeNumero == 1 ){
+                    a = 3;
+                    tmp = TextureRegion.split(andando2,37,58);
+                }
+
+                if( personajeNumero == 2 ){
+                    a = 2;
+                    loop = false;
+                    tmp = TextureRegion.split(andando2,35,58);
+                }
+
+                if( personajeNumero == 3){
+                    a = 2;
+                    loop = false;
+                    tmp = TextureRegion.split(andando2,39,58);
+                }
+
                 walkFrames = new TextureRegion[a];
 
                 int index2 = 0;
@@ -270,17 +306,16 @@ public class Personaje extends Actor {
                 }
             }
 
-            salto.play();
-            salto.setVolume(0.02f);
+
         }
 
         if(estado == Estado.CARGANDO){
             body.setLinearVelocity(0,0);
             if(direccion == Direccion.DERECHA){
-                sprite = new Sprite(new Texture("personajes/Goku/cargaR1e.png"));
+                sprite = new Sprite(cargandoR);
                 sprite.setBounds(body.getPosition().x+4, body.getPosition().y,3f , 3f );
             }else{
-                sprite = new Sprite(new Texture("personajes/Goku/cargaL1a.png"));
+                sprite = new Sprite(cargandoL);
             }
             recargaKi.play();
             recargaKi.setVolume(0.03f);
@@ -312,7 +347,8 @@ public class Personaje extends Actor {
             andando2 = new Texture("personajes/Goku/animacion2/walkinggoku2.png");
             kamehamehaTextureR = new Texture("personajes/Goku/kamehameha/kamehamehaR.png");
             kamehamehaTextureL = new Texture("personajes/Goku/kamehameha/kamehamehaL.png");
-            cargandoR = new Texture("personajes/Goku/cargaR1.png");
+            cargandoR = new Texture("personajes/Goku/cargaR1e.png");
+            cargandoL = new Texture("personajes/Goku/cargaL1a.png");
 
             sprite = new Sprite(standr);
 
@@ -330,6 +366,8 @@ public class Personaje extends Actor {
             rafaga2 = new Texture("personajes/Vegeta/vrafagal.png");
             andando1 = new Texture("personajes/Vegeta/animacion1/vandandor.png");
             andando2 = new Texture("personajes/Vegeta/animacion2/vandandol.png");
+            cargandoR = new Texture("personajes/Vegeta/vegetaR1.png");
+            cargandoL = new Texture("personajes/Vegeta/vegetaR2.png");
 
             salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
             caida = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/caidatrassalto.mp3"));
@@ -350,6 +388,8 @@ public class Personaje extends Actor {
             rafaga2 = new Texture("personajes/Piccolo/prafagal.png");
             andando1 = new Texture("personajes/Piccolo/animacion1/pandandor.png");
             andando2 = new Texture("personajes/Piccolo/animacion2/pandandol.png");
+            cargandoR = new Texture("personajes/Piccolo/pcargaR1.png");
+            cargandoL = new Texture("personajes/Piccolo/pcargaR2.png");
 
             sprite = new Sprite(standr);
 
@@ -413,6 +453,10 @@ public class Personaje extends Actor {
     }
 
     public void setSalud(int salud) {
-        this.salud -= salud;
+        this.salud += salud;
+    }
+
+    public int getSalud() {
+        return salud;
     }
 }

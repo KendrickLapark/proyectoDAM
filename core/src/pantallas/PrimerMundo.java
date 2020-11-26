@@ -89,7 +89,7 @@ public class PrimerMundo implements Screen {
         listaEnemigos =  new ArrayList<>();
         listaCapsulas = new ArrayList<>();
 
-        p1 = new Personaje(world, 1,149,15);
+        p1 = new Personaje(world, personajeSeleccionado,105,5.6f);
 
         pt1 = new Plataforma(world, 149,13.5f);
 
@@ -273,17 +273,12 @@ public class PrimerMundo implements Screen {
 
         juego.getSpriteBatch().begin();
 
-        Interface.draw(orthographicCamera, p1.getKi(), puntuacion);
-        //Interface.muestraKi(p1.getKi(),p1.getCuerpo().getPosition().x, p1.getCuerpo().getPosition().y, orthographicCamera);
+        Interface.draw(orthographicCamera, p1.getKi(), p1.getSalud(), puntuacion);
 
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
 
         System.out.println("Posicion d eY"+p1.getCuerpo().getPosition().y);
-
-        /*e1.animacionAcciones(elapsedTime, p1);
-        e1.draw(juego.getSpriteBatch(),0);
-        e1.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);*/
 
         pt1.draw(juego.getSpriteBatch(),0);
 
@@ -328,15 +323,6 @@ public class PrimerMundo implements Screen {
 
         }
 
-
-        /*e2.animacionAcciones(elapsedTime,p1);
-        e2.draw(juego.getSpriteBatch(),0);
-        e2.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);
-
-        e3.animacionAcciones(elapsedTime,p1);
-        e3.draw(juego.getSpriteBatch(),0);
-        e3.setDistanciaEnemigo(p1.getCuerpo().getPosition().x);*/
-
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
         for(Capsula c : listaCapsulas){
@@ -352,8 +338,6 @@ public class PrimerMundo implements Screen {
             c.recoleccion(p1);
 
         }
-
-
 
         //DEBUGS
 
@@ -378,6 +362,15 @@ public class PrimerMundo implements Screen {
         System.out.println("COLISION??????------------------>"+c1.getColision());
 
         System.out.println("Estado personaje:  "+p1.getEstado());*/
+
+
+        if(p1.getSalud() == 0 || Interface.tiempototal<0){
+
+            juego.setScreen(new PantallaGameOver(juego, personajeSeleccionado));
+            Interface.tiempo=0;
+            dispose();
+
+        }
 
         teclado.entrada();
 
@@ -416,7 +409,6 @@ public class PrimerMundo implements Screen {
     public void dispose() {
 
         orthogonalTiledMapRenderer.dispose();
-        world.dispose();
         musica.dispose();
 
     }

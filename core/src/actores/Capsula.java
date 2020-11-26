@@ -1,6 +1,7 @@
 package actores;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,7 +22,8 @@ public class Capsula extends Actor {
     private FixtureDef propiedadesFisicasCuerpo;//Definidor de las propiedades físicas del body
     private Boolean colision; // Boolean para detectar si colisiona con otros cuerpos
     private Personaje personaje;
-    private int contadorColision, contPuntuacion;
+    private int contadorColision, contSonido;
+    private Music recoleccion;
 
 
     public Capsula(World world, Personaje personaje, String ruta, float x, float y){
@@ -31,8 +33,8 @@ public class Capsula extends Actor {
         sprite = new Sprite(new Texture(ruta));
 
         contadorColision = 0;
-        contPuntuacion = 0;
-
+        contSonido = 0;
+        recoleccion = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/collectsound.mp3"));
 
         colision = false;
 
@@ -68,6 +70,12 @@ public class Capsula extends Actor {
             sprite.setOrigin(cuerpo.getPosition().x,cuerpo.getPosition().y);
             sprite.setBounds(cuerpo.getPosition().x - 0.35f,cuerpo.getPosition().y - 0.35f,0.7f,0.7f);
             sprite.draw(batch);
+
+        }
+
+        if(contadorColision==1){
+            recoleccion.play();
+            recoleccion.setVolume(0.03f);
         }
 
     }

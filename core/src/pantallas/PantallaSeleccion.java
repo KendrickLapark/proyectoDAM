@@ -1,4 +1,4 @@
-package com.mygdx.game.pantallas;
+package pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,9 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Juego;
-
-import pantallas.PrimerMundo;
-
 
 public class PantallaSeleccion implements Screen {
 

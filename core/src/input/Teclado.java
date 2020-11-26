@@ -3,6 +3,7 @@ package input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -13,10 +14,13 @@ public class Teclado implements InputProcessor {
 
     private Personaje personaje;
     private World world;
+    private Music salto, caida;
 
     public Teclado(World world,Personaje personaje) {
         this.personaje = personaje;
         this.world = world;
+        salto = salto = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/salto.mp3"));
+        caida = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/caidatrassalto.mp3"));
     }
 
     @Override
@@ -37,6 +41,8 @@ public class Teclado implements InputProcessor {
                 break;
             case Input.Keys.W:
                 if(personaje.getEstado()!= Personaje.Estado.AIRE){
+                    salto.play();
+                    salto.setVolume(0.02f);
                     personaje.getCuerpo().applyLinearImpulse(new Vector2(0,10),personaje.getCuerpo().getWorldCenter(),true);
                 }
                 break;
