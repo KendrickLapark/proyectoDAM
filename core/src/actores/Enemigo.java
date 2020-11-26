@@ -95,7 +95,7 @@ public class Enemigo extends Actor {
             onda.draw(batch,parentAlpha);
         }
 
-        if(vidas == 0){
+        if(vidas <= 0){
             sprite.setBounds(body.getPosition().x+4, body.getPosition().y,1.1f , 1.1f );
             sprite.setPosition(body.getPosition().x-0.6f , body.getPosition().y - 1);
             sprite.draw(batch);
@@ -194,7 +194,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(vidas == 0 && direccion == Direccion.IZQUIERDA){
+        if(vidas <= 0 && direccion == Direccion.IZQUIERDA){
 
             sprite = new Sprite(deadL);
 
@@ -202,7 +202,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(vidas == 0 && direccion == Direccion.DERECHA){
+        if(vidas <= 0 && direccion == Direccion.DERECHA){
 
 
             sprite = new Sprite(deadR);
@@ -211,7 +211,7 @@ public class Enemigo extends Actor {
 
         }
 
-        if(distanciaEnemigo > -7 && distanciaEnemigo<=0 && vidas != 0){
+        if(distanciaEnemigo > -7 && distanciaEnemigo<=0 && vidas > 0){
 
             tiempo += Gdx.graphics.getDeltaTime();
             direccionPrevia = direccion;
@@ -230,7 +230,7 @@ public class Enemigo extends Actor {
                 }
                 direccion = direccionPrevia;
             }
-        }else if(distanciaEnemigo<7 && distanciaEnemigo>0 && vidas != 0){
+        }else if(distanciaEnemigo<7 && distanciaEnemigo>0 && vidas > 0){
 
             tiempo += Gdx.graphics.getDeltaTime();
             direccionPrevia = direccion;
@@ -297,5 +297,9 @@ public class Enemigo extends Actor {
 
     public ArrayList<Onda> getListaOndas() {
         return listaOndas;
+    }
+
+    public int getVidas() {
+        return vidas;
     }
 }

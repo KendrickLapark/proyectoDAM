@@ -57,6 +57,7 @@ public class PrimerMundo implements Screen {
     private ArrayList<Onda> ondasToDestroy;
     private ArrayList<Onda> ondasMundo;
     private ArrayList<Enemigo> listaEnemigos;
+    private ArrayList<Enemigo> enemigosDestroy;
     private ArrayList<Capsula> listaCapsulas;
 
     private Music musica;
@@ -88,6 +89,7 @@ public class PrimerMundo implements Screen {
 
         listaEnemigos =  new ArrayList<>();
         listaCapsulas = new ArrayList<>();
+        enemigosDestroy = new ArrayList<>();
 
         p1 = new Personaje(world, personajeSeleccionado,105,5.6f);
 
@@ -154,6 +156,10 @@ public class PrimerMundo implements Screen {
 
                 for(Enemigo e: listaEnemigos){
 
+                    if(contact.getFixtureA().getBody() == p1.getCuerpo() && contact.getFixtureB().getBody() == e.getBody()){
+                        p1.setSalud(-1);
+                    }
+
                     for(int i = 0; i<e.getListaOndas().size();i++){
 
                         for(int l = 0; l<p1.getListaOndas().size();l++){
@@ -194,6 +200,12 @@ public class PrimerMundo implements Screen {
                             p1.getListaOndas().remove(i);
                             listaEnemigos.get(k).vidas--;
 
+                            if(listaEnemigos.get(k).getVidas()<=0){
+
+                                enemigosDestroy.add(listaEnemigos.get(k));
+
+                            }
+
                         }
 
                     }
@@ -216,6 +228,10 @@ public class PrimerMundo implements Screen {
                     public void run() {
                         for(Onda onda : ondasToDestroy){
                             onda.body.setActive(false);
+                        }
+
+                        for(Enemigo enemigo : enemigosDestroy){
+                            enemigo.body.setActive(false);
                         }
 
                         if(e1.vidas==0){
@@ -362,6 +378,8 @@ public class PrimerMundo implements Screen {
         System.out.println("COLISION??????------------------>"+c1.getColision());
 
         System.out.println("Estado personaje:  "+p1.getEstado());*/
+
+        System.out.println("VIDAS DEL ENEMIGO "+e4.getVidas());
 
 
         if(p1.getSalud() == 0 || Interface.tiempototal<0){
