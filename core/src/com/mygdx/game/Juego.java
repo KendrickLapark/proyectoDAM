@@ -7,6 +7,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import pantallas.PantallaMenu;
 import pantallas.PantallaSeleccion;
 import pantallas.PantallaGameOver;
 import pantallas.PrimerMundo;
@@ -20,7 +22,7 @@ public class Juego extends Game {
 	public void create () {
 
 		spriteBatch = new SpriteBatch();
-		setScreen(new PantallaSeleccion(this));
+		setScreen(new PrimerMundo(this,1));
 
 	}
 

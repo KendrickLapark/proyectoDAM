@@ -31,6 +31,8 @@ import com.mygdx.game.Juego;
 import java.util.ArrayList;
 
 import actores.Capsula;
+import actores.Checkpoint;
+import actores.Corazon;
 import actores.Enemigo;
 import actores.Personaje;
 import actores.Plataforma;
@@ -51,14 +53,18 @@ public class PrimerMundo implements Screen {
     private Texture blank;
 
     private Personaje p1;
-    private Enemigo e1, e2, e3, e4, e5, e6;
-    private Capsula c1,c2,c3,c4,c5,c6;
+    private Enemigo e1,e2,e3,e4,e5,e6,e7;
+    private Capsula c1,c2,c3,c4,c5;
+    private Corazon co1,co2;
     private Plataforma pt1;
+    private Checkpoint checkpoint;
+
     private ArrayList<Onda> ondasToDestroy;
     private ArrayList<Onda> ondasMundo;
     private ArrayList<Enemigo> listaEnemigos;
     private ArrayList<Enemigo> enemigosDestroy;
     private ArrayList<Capsula> listaCapsulas;
+    private ArrayList<Corazon> listaCorazones;
 
     private Music musica;
 
@@ -86,21 +92,23 @@ public class PrimerMundo implements Screen {
 
         tiempoContador = 0;
         puntuacion = 0;
-
         listaEnemigos =  new ArrayList<>();
         listaCapsulas = new ArrayList<>();
+        listaCorazones = new ArrayList<>();
         enemigosDestroy = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,105,5.6f);
+        p1 = new Personaje(world, personajeSeleccionado,175,2.6f);
 
         pt1 = new Plataforma(world, 149,13.5f);
+        checkpoint = new Checkpoint(world, 187,2.6f);
 
         e1 = new Enemigo(world,8,12,1, 15, 2.6f);
         e2 = new Enemigo(world, 45, 43,1,50, 2.6f);
         e3 = new Enemigo(world, 65, 80,1,70,2.6f);
-        e4 = new Enemigo(world, 124, 133,1,130,9.6f);
-        e5 = new Enemigo(world,148,162, 1,150,2.6f);
-        e6 = new Enemigo(world,165,180,1,171, 14.6f);
+        e4 = new Enemigo(world,104, 111, 1,107,5.6f);
+        e5 = new Enemigo(world, 124, 133,1,130,9.6f);
+        e6 = new Enemigo(world,148,162, 1,150,2.6f);
+        e7 = new Enemigo(world,165,180,1,171, 14.6f);
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
@@ -109,15 +117,23 @@ public class PrimerMundo implements Screen {
         listaEnemigos.add(e5);
         listaEnemigos.add(e6);
 
+        co1 = new Corazon(world, p1, "objetos/corazon.png",145,17);
+        co2 = new Corazon(world, p1, "objetos/corazon.png", 90, 5);
+
+        listaCorazones.add(co1);
+        listaCorazones.add(co2);
+
         c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
         c2 = new Capsula(world,p1,"objetos/capsule.png",33,7);
         c3 = new Capsula(world,p1,"objetos/capsule.png",54,7);
         c4 = new Capsula(world,p1,"objetos/capsule.png",119,10);
+        c5 = new Capsula(world,p1,"objetos/capsule.png", 173, 17);
 
         listaCapsulas.add(c1);
         listaCapsulas.add(c2);
         listaCapsulas.add(c3);
         listaCapsulas.add(c4);
+        listaCapsulas.add(c5);
 
         ondasToDestroy = new ArrayList<>();
 
@@ -298,6 +314,8 @@ public class PrimerMundo implements Screen {
 
         pt1.draw(juego.getSpriteBatch(),0);
 
+        checkpoint.draw(juego.getSpriteBatch(),0);
+
         System.out.println("WIDTH "+Gdx.graphics.getWidth()+" HEIGHT "+Gdx.graphics.getHeight()); //  1920 1017
 
         for(Enemigo e:listaEnemigos){
@@ -338,6 +356,16 @@ public class PrimerMundo implements Screen {
             o.body.setActive(false);
 
         }
+
+        for(Corazon co: listaCorazones){
+
+            co.draw(juego.getSpriteBatch(),0);
+            co.recoleccion(p1);
+
+        }
+
+
+
 
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
