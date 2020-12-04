@@ -58,7 +58,7 @@ public class Interface {
 
         kiEntero = Math.round(ki);
 
-        vector32 = new Vector3(500,1120,0);
+        vector32 = new Vector3(480,1120,0);
         camara.unproject(vector32);
 
         bitmapFont1.getData().scaleX = 0.035f;

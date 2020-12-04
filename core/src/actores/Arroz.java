@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Corazon extends Actor {
+public class Arroz extends Actor {
 
     private Sprite sprite; //Sprite que simboliza al actor
     private World world; //Mundo de nuestro juego
@@ -26,7 +26,7 @@ public class Corazon extends Actor {
     private Music recoleccion;
 
 
-    public Corazon(World world, Personaje personaje, String ruta, float x, float y){
+    public Arroz(World world, Personaje personaje, String ruta, float x, float y){
 
         this.world = world;
         this.personaje = personaje;

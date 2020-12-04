@@ -2,7 +2,6 @@ package pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,126 +24,72 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Juego;
 
 import java.util.ArrayList;
 
-import actores.Capsula;
-import actores.Checkpoint;
-import actores.Arroz;
 import actores.Enemigo;
 import actores.Personaje;
-import actores.Plataforma;
 import input.Teclado;
 import objetos.Onda;
 
-public class PrimerMundo implements Screen {
+public class SegundoMundo implements Screen {
 
     private Juego juego;
     private World world;
 
     private Box2DDebugRenderer box2DDebugRenderer;
 
-    private Body rectanguloSuelo;
-
     private TiledMap map;
 
-    private Texture blank;
+    private Body rectanguloSuelo;
 
     private Personaje p1;
-    private Enemigo e1,e2,e3,e4,e5,e6,e7;
-    private Capsula c1,c2,c3,c4,c5;
-    private Arroz a1,a2;
-    private Plataforma pt1;
-    private Checkpoint checkpoint;
 
-    private ArrayList<Onda> ondasToDestroy;
-    private ArrayList<Onda> ondasMundo;
+    private Enemigo e1, e2;
+
     private ArrayList<Enemigo> listaEnemigos;
+    private ArrayList<Onda> ondasToDestroy;
     private ArrayList<Enemigo> enemigosDestroy;
-    private ArrayList<Capsula> listaCapsulas;
-    private ArrayList<Arroz> listaArroz;
 
-    private Music musica;
-
-    private Viewport viewport;
     private OrthographicCamera orthographicCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     private int personajeSeleccionado, puntuacion;
-    private float velocidadRecarga, tiempoContador;
 
-    float elapsedTime;
+    private Texture blank;
+
+    private float elapsedTime;
 
     private Teclado teclado;
 
-
-    public PrimerMundo(Juego loc, int personajeSeleccionado){
+    public SegundoMundo(Juego loc, int personajeSeleccionado){
 
         this.juego = loc;
         this.personajeSeleccionado = personajeSeleccionado;
+
         orthographicCamera = new OrthographicCamera(20,20);
         world = new World(new Vector2(0,-9.8f),true);
-        map = new TmxMapLoader().load("mapa/mapav8.tmx");
+        map = new TmxMapLoader().load("mapa/segundomapa.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
+
         blank = new Texture("recursos/blank.png");
 
-        tiempoContador = 0;
-        puntuacion = 0;
         listaEnemigos =  new ArrayList<>();
-        listaCapsulas = new ArrayList<>();
-        listaArroz = new ArrayList<>();
         enemigosDestroy = new ArrayList<>();
+        ondasToDestroy = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,5,2.6f);
-
-        pt1 = new Plataforma(world, 149,13.5f);
-        checkpoint = new Checkpoint(world, 187,2.6f);
+        p1 = new Personaje(world, personajeSeleccionado,24,2.6f);
 
         e1 = new Enemigo(world,8,16,1, 10, 2.6f);
         e2 = new Enemigo(world, 45, 55,1,50, 2.6f);
-        e3 = new Enemigo(world, 65, 80,1,70,2.6f);
-        e4 = new Enemigo(world,104, 111, 1,107,5.6f);
-        e5 = new Enemigo(world, 124, 133,1,130,9.6f);
-        e6 = new Enemigo(world,148,162, 1,150,2.6f);
-
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
-        listaEnemigos.add(e3);
-        listaEnemigos.add(e4);
-        listaEnemigos.add(e5);
-        listaEnemigos.add(e6);
-
-        a1 = new Arroz(world, p1, "objetos/rize.png",145,17);
-        a2 = new Arroz(world, p1, "objetos/rize.png", 90, 5);
-
-        listaArroz.add(a1);
-        listaArroz.add(a2);
-
-        c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
-        c2 = new Capsula(world,p1,"objetos/capsule.png",33,7);
-        c3 = new Capsula(world,p1,"objetos/capsule.png",54,7);
-        c4 = new Capsula(world,p1,"objetos/capsule.png",119,10);
-        c5 = new Capsula(world,p1,"objetos/capsule.png", 173, 17);
-
-        listaCapsulas.add(c1);
-        listaCapsulas.add(c2);
-        listaCapsulas.add(c3);
-        listaCapsulas.add(c4);
-        listaCapsulas.add(c5);
-
-        ondasToDestroy = new ArrayList<>();
-
-        Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
-
-        musica = Gdx.audio.newMusic(Gdx.files.internal("sonido/musica/dbzInicio.mp3"));
-        musica.play();
-        musica.setVolume(0.03f);
-        musica.setLooping(true);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
+
+        Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
 
         orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
 
@@ -231,7 +176,7 @@ public class PrimerMundo implements Screen {
                         ondasToDestroy.add(p1.getListaOndas().get(i));
                         p1.getListaOndas().remove(i);
                         e1.vidas--;
-                        
+
                     }
 
                 }
@@ -293,11 +238,7 @@ public class PrimerMundo implements Screen {
 
         orthographicCamera.update();
 
-        if(p1.getEstado()!=Personaje.Estado.TRANSICION){
-            orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
-        }else{
-            orthographicCamera.position.x = 186.8f;
-        }
+        orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
 
         orthogonalTiledMapRenderer.setView(orthographicCamera);
 
@@ -311,16 +252,10 @@ public class PrimerMundo implements Screen {
 
         Interface.draw(orthographicCamera, p1.getKi(), p1.getSalud(), puntuacion);
 
-        checkpoint.draw(juego.getSpriteBatch(),0);
-
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
 
-        System.out.println("Posicion de Y"+p1.getCuerpo().getPosition().y);
-
-        pt1.draw(juego.getSpriteBatch(),0);
-
-        System.out.println("WIDTH "+Gdx.graphics.getWidth()+" HEIGHT "+Gdx.graphics.getHeight()); //  1920 1017
+        System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
         for(Enemigo e:listaEnemigos){
 
@@ -334,96 +269,6 @@ public class PrimerMundo implements Screen {
             }
 
         }
-
-        for (int x = 0; x<p1.getListaOndas().size();x++){
-
-            p1.getListaOndas().get(x).cicloVida();
-
-            if(p1.getListaOndas().get(x).tiempoVida>1f){
-                ondasToDestroy.add(p1.getListaOndas().get(x));
-                p1.getListaOndas().remove(x);
-            }
-
-        }
-
-        for (Enemigo e: listaEnemigos){
-            for (int j = 0; j<e.getListaOndas().size();j++){
-                if(e.getListaOndas().get(j).tiempoVida>1f){
-                    ondasToDestroy.add(e.getListaOndas().get(j));
-                    e.getListaOndas().remove(j);
-                }
-            }
-        }
-
-        for(Onda o: ondasToDestroy){
-
-            o.body.setActive(false);
-
-        }
-
-        for(Arroz co: listaArroz){
-
-            co.draw(juego.getSpriteBatch(),0);
-            co.recoleccion(p1);
-
-        }
-
-        System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
-
-        System.out.println("Estado personaje:  "+p1.getEstado());
-
-        for(Capsula c : listaCapsulas){
-
-            c.draw(juego.getSpriteBatch(),0);
-
-            if(c.getContadorColision()==1){
-
-                puntuacion+=10;
-
-            }
-
-            c.recoleccion(p1);
-
-        }
-
-        //DEBUGS
-
-        /*System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
-
-        System.out.println("Estado personaje:  "+p1.getEstado());
-
-        System.out.println("Direccion personaje:  "+p1.getDireccion());
-
-        System.out.println("EL SUELO ESTA AQUI: "+p1.getPosicionSuelo());
-
-        System.out.println("POSICION DEL DICHOSO BODY Y: "+p1.getCuerpo().getPosition().y);
-
-        System.out.println("CARGANDOOOOOOOOOOOOOOOOO: "+p1.getCargando());*/
-
-        //System.out.println("Overlasps primer mundo"+p1.recoleccion(c1));
-
-        //c1.recoleccion(p1);
-
-        /*System.out.println("KIKIKIKIKI"+p1.getKi());
-
-        System.out.println("COLISION??????------------------>"+c1.getColision());
-
-        System.out.println("Estado personaje:  "+p1.getEstado());*/
-
-        System.out.println("VIDAS DEL ENEMIGO "+e4.getVidas());
-
-
-        if(p1.getSalud() == 0 || Interface.tiempototal<0){
-
-            juego.setScreen(new PantallaGameOver(juego, personajeSeleccionado));
-            Interface.tiempo=0;
-            dispose();
-
-        }
-
-        System.out.println("Posicion uno de la  barraaaaaaaaaaa-->"+(p1.getCuerpo().getPosition().x-3));
-
-        System.out.println("Posicion pretendida----------->"+(Gdx.graphics.getWidth()/11.1f));
 
         teclado.entrada();
 
@@ -446,7 +291,6 @@ public class PrimerMundo implements Screen {
         }
 
         juego.getSpriteBatch().end();
-
 
     }
 
@@ -474,7 +318,6 @@ public class PrimerMundo implements Screen {
     public void dispose() {
 
         orthogonalTiledMapRenderer.dispose();
-        musica.dispose();
 
     }
 

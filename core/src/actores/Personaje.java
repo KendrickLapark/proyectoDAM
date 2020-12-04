@@ -24,7 +24,7 @@ import objetos.Onda;
 public class Personaje extends Actor {
 
     public enum Direccion{ DERECHA, IZQUIERDA}
-    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO, PLATAFORMA}
+    public enum Estado{QUIETO, ANDANDO, AIRE, RAFAGA, CARGANDO, MUERTO, PLATAFORMA, TRANSICION}
 
     private World world;
     private Sprite sprite;
@@ -34,6 +34,7 @@ public class Personaje extends Actor {
     private Body body;
     private BodyDef bodyDef;
     private FixtureDef fixtureDef;
+
 
     private Animation walkAnimation;
     private TextureRegion [] walkFrames;
@@ -136,49 +137,50 @@ public class Personaje extends Actor {
 
     public void actualizarEstado(){
 
-        if(estado != Estado.PLATAFORMA){
+        if(body.getPosition().x>186.8f){
+            estado = Estado.TRANSICION;
+        }else{
 
+            if(body.getPosition().y<0){
+                estado = Estado.MUERTO;
+            }
 
-        }
+            if( body.getLinearVelocity().y == 0){
+                estado = Estado.QUIETO;
+            }
 
-        if(body.getPosition().y<0){
-            estado = Estado.MUERTO;
-        }
+            if(body.getPosition().y>posicionSuelo  && body.getLinearVelocity().y != 0){
+                estado = Estado.AIRE;
+            }
 
-        if( body.getLinearVelocity().y == 0){
-            estado = Estado.QUIETO;
-        }
+            if(body.getLinearVelocity().y>0){
+                cayendo = false;
+            }else if(body.getLinearVelocity().y<0){
+                cayendo = true;
+            }
 
-        if(body.getPosition().y>posicionSuelo  && body.getLinearVelocity().y != 0){
-            estado = Estado.AIRE;
-        }
+            if(body.getLinearVelocity().x>0){
+                direccion =  Direccion.DERECHA;
+            }else if(body.getLinearVelocity().x<0)
+                direccion = Direccion.IZQUIERDA;
 
-        if(body.getLinearVelocity().y>0){
-            cayendo = false;
-        }else if(body.getLinearVelocity().y<0){
-            cayendo = true;
-        }
+            if(estado != Estado.AIRE && body.getLinearVelocity().x!=0){
+                estado = Estado.ANDANDO;
 
-        if(body.getLinearVelocity().x>0){
-            direccion =  Direccion.DERECHA;
-        }else if(body.getLinearVelocity().x<0)
-            direccion = Direccion.IZQUIERDA;
+            }
 
-        if(estado != Estado.AIRE && body.getLinearVelocity().x!=0){
-            estado = Estado.ANDANDO;
+            if(Gdx.input.isKeyPressed(Input.Keys.F)){
+                estado = Estado.RAFAGA;
+            }
 
-        }
+            if(estado !=Estado.AIRE && Gdx.input.isKeyPressed(Input.Keys.X)){
+                if(this.getKi()<=7.97f){
+                    velocidadRecarga = 0.03f;
 
-        if(Gdx.input.isKeyPressed(Input.Keys.F)){
-            estado = Estado.RAFAGA;
-        }
+                    this.setKi(velocidadRecarga);
+                    estado = Estado.CARGANDO;
+                }
 
-        if(estado !=Estado.AIRE && Gdx.input.isKeyPressed(Input.Keys.X)){
-            if(this.getKi()<=7.97f){
-                velocidadRecarga = 0.03f;
-
-                this.setKi(velocidadRecarga);
-                estado = Estado.CARGANDO;
             }
 
         }
@@ -193,6 +195,12 @@ public class Personaje extends Actor {
 
         if(estado == Estado.MUERTO){
             System.exit(0);
+        }
+
+        if(estado == Estado.TRANSICION){
+
+            body.setLinearVelocity(5,-5);
+
         }
 
         if(estado == Estado.QUIETO && rafagazo==false){
@@ -211,7 +219,7 @@ public class Personaje extends Actor {
             }
         }
 
-        if(estado == Estado.ANDANDO){
+        if(estado == Estado.ANDANDO || estado == Estado.TRANSICION){
 
             if(direccion == Direccion.DERECHA){
 
@@ -459,4 +467,5 @@ public class Personaje extends Actor {
     public int getSalud() {
         return salud;
     }
+
 }

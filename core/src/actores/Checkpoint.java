@@ -42,8 +42,10 @@ public class Checkpoint extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        sprite.setBounds(body.getPosition().x-0.5f, body.getPosition().y-0.4f, 1f,0.75f);
+        sprite.setBounds(body.getPosition().x-0.5f, body.getPosition().y-0.4f, 1f,1.25f);
         sprite.draw(batch);
+
+        body.setActive(false);
 
     }
 
