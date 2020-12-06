@@ -2,6 +2,7 @@ package pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -46,7 +47,7 @@ public class SegundoMundo implements Screen {
 
     private Personaje p1;
 
-    private Enemigo e1, e2;
+    private Enemigo e1, e2, e3, e4, e5, e6;
 
     private ArrayList<Enemigo> listaEnemigos;
     private ArrayList<Onda> ondasToDestroy;
@@ -58,6 +59,8 @@ public class SegundoMundo implements Screen {
     private int personajeSeleccionado, puntuacion;
 
     private Texture blank;
+
+    private Music musica;
 
     private float elapsedTime;
 
@@ -79,17 +82,28 @@ public class SegundoMundo implements Screen {
         enemigosDestroy = new ArrayList<>();
         ondasToDestroy = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,24,2.6f);
+        p1 = new Personaje(world, personajeSeleccionado,91,2.6f);
 
         e1 = new Enemigo(world,8,16,1, 10, 2.6f);
-        e2 = new Enemigo(world, 45, 55,1,50, 2.6f);
+        e2 = new Enemigo(world, 38, 48,1,42, 2.6f);
+        e3 = new Enemigo(world, 70, 87, 1,84,5.5f);
+        e4 = new Enemigo(world, 69, 78,1,74 , 2.6f);
+        e5 = new Enemigo(world, 90, 102, 1, 96, 2.6f);
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
+        listaEnemigos.add(e3);
+        listaEnemigos.add(e4);
+        listaEnemigos.add(e5);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
         Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
+
+        musica = Gdx.audio.newMusic(Gdx.files.internal("sonido/musica/dbzInicio.mp3"));
+        musica.play();
+        musica.setVolume(0.03f);
+        musica.setLooping(true);
 
         orthographicCamera.position.set(p1.getX(),p1.getY()+8,0);
 
@@ -121,7 +135,7 @@ public class SegundoMundo implements Screen {
                         p1.setSalud(-1);
                     }
 
-                    for(int i = 0; i<e.getListaOndas().size();i++){
+                     for(int i = 0; i<e.getListaOndas().size();i++){
 
                         for(int l = 0; l<p1.getListaOndas().size();l++){
 
@@ -270,6 +284,29 @@ public class SegundoMundo implements Screen {
 
         }
 
+        for (Enemigo e: listaEnemigos){
+            for (int j = 0; j<e.getListaOndas().size();j++){
+                if(e.getListaOndas().get(j).tiempoVida>1f){
+                    ondasToDestroy.add(e.getListaOndas().get(j));
+                    e.getListaOndas().remove(j);
+                }
+            }
+        }
+
+        for(Onda o: ondasToDestroy){
+
+            o.body.setActive(false);
+
+        }
+
+        if(p1.getSalud() == 0 || Interface.tiempototal<0){
+
+            juego.setScreen(new PantallaGameOver(juego, personajeSeleccionado, 2));
+            Interface.tiempo=0;
+            dispose();
+
+        }
+
         teclado.entrada();
 
         if(p1.getEstado()!= Personaje.Estado.TRANSICION){
@@ -318,6 +355,7 @@ public class SegundoMundo implements Screen {
     public void dispose() {
 
         orthogonalTiledMapRenderer.dispose();
+        musica.dispose();
 
     }
 

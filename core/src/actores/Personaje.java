@@ -50,11 +50,13 @@ public class Personaje extends Actor {
 
     //private ArrayList <Onda> listaOndas;
 
-    private float animationTime;
+    private float transitionTime;
 
     private Boolean cayendo, rafagazo, bkhamehameha, loop, cargando, colision;
 
     private int personajeNumero, indexk, salud, contador;
+
+
 
     public Personaje(World mundo, int personajeElegido, float x, float y){
 
@@ -66,6 +68,7 @@ public class Personaje extends Actor {
         personajeNumero = personajeElegido;
         salud = 2;
         ki = 8;
+        transitionTime = 0;
 
         listaOndas = new ArrayList<>();
 
@@ -199,6 +202,7 @@ public class Personaje extends Actor {
 
         if(estado == Estado.TRANSICION){
 
+            transitionTime += Gdx.graphics.getDeltaTime();
             body.setLinearVelocity(5,-5);
 
         }
@@ -468,4 +472,7 @@ public class Personaje extends Actor {
         return salud;
     }
 
+    public float getTransitionTime() {
+        return transitionTime;
+    }
 }

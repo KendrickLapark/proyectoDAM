@@ -1,6 +1,7 @@
 package objetos;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,8 @@ public class Onda extends Actor {
     private Personaje personaje;
     private Enemigo enemigo;
 
+    private Music blastEffect;
+
     private boolean colision;
 
     public Body body;
@@ -35,6 +38,11 @@ public class Onda extends Actor {
         this.enemigo =  e1;
 
         tiempoVida = 0;
+
+        blastEffect = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/kiblast.mp3"));
+
+        blastEffect.play();
+        blastEffect.setVolume(0.1f);
 
         fisica2();
 
@@ -60,6 +68,11 @@ public class Onda extends Actor {
         this.personaje = p1;
 
         fisica();
+
+        blastEffect = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/kiblast.mp3"));
+
+        blastEffect.play();
+        blastEffect.setVolume(0.1f);
 
         if (personaje.getDireccion() == Personaje.Direccion.DERECHA) {
             body.setLinearVelocity(8, 0);

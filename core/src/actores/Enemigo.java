@@ -1,6 +1,7 @@
 package actores;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -39,6 +40,8 @@ public class Enemigo extends Actor {
     private TextureRegion[][]tmp;
     TextureRegion currentWalkFrame;
 
+    private Music deadSound;
+
     public int vidas, distanciaEnemigo, idEnemigo, x, y;
 
     private float posInicialX, crono, tiempo, tiempoRafaga, positionX, positionY;
@@ -56,6 +59,8 @@ public class Enemigo extends Actor {
 
         direccion = Direccion.DERECHA;
         estado = Estado.ANDANDO;
+
+        deadSound = Gdx.audio.newMusic(Gdx.files.internal("sonido/efectos/saibamandead.mp3"));
 
         crono = 0;
         tiempo = 1;
@@ -149,8 +154,6 @@ public class Enemigo extends Actor {
 
     public void animacionAcciones(float elapsedTime, Personaje personaje){
 
-
-
         if(estado == Estado.ANDANDO && direccion == Direccion.DERECHA){
 
             tmp = TextureRegion.split(animacionWalking1,37,58);
@@ -203,7 +206,6 @@ public class Enemigo extends Actor {
         }
 
         if(vidas <= 0 && direccion == Direccion.DERECHA){
-
 
             sprite = new Sprite(deadR);
 

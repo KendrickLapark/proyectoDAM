@@ -20,13 +20,15 @@ public class PantallaGameOver implements Screen {
 
     private Juego juego;
 
-    public int personajeElegido;
+    public int personajeElegido, numMundo;
 
-    public PantallaGameOver(Juego j, int personajeSelect){
+    public PantallaGameOver(Juego j, int personajeSelect, int nMundo){
         this.juego = j;
         personajeElegido = personajeSelect;
         viewport = new FitViewport(300,180, new OrthographicCamera());
         stage = new Stage(viewport,j.getSpriteBatch());
+
+        numMundo = nMundo;
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -51,9 +53,21 @@ public class PantallaGameOver implements Screen {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.justTouched()){
-            juego.setScreen(new PrimerMundo(juego, personajeElegido));
+
+        if(numMundo ==  1){
+            if(Gdx.input.justTouched()){
+                juego.setScreen(new PrimerMundo(juego, personajeElegido));
+                dispose();
+            }
         }
+
+        if(numMundo == 2){
+            if(Gdx.input.justTouched()){
+                juego.setScreen(new SegundoMundo(juego, personajeElegido));
+                dispose();
+            }
+        }
+
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();

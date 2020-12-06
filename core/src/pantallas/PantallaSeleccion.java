@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -30,6 +31,9 @@ public class PantallaSeleccion implements Screen {
     Texture texture1, texture2, texture3, texture4;
     Image goku, vegeta, piccolo, fondo;
 
+    private Label label;
+    private Label.LabelStyle labelStyle;
+
     void preparaPantalla(){
 
 
@@ -40,20 +44,32 @@ public class PantallaSeleccion implements Screen {
 
         FreeTypeFontGenerator freeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("recursos/impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter freeTypeFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator.FreeTypeFontParameter freeTypeFontParameter1 = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         freeTypeFontParameter.size = 15;
         freeTypeFontParameter.borderWidth = 1;
-        freeTypeFontParameter.borderColor = Color.PURPLE;
+        freeTypeFontParameter.borderColor = Color.BLACK;
+
+        freeTypeFontParameter1.size = 10;
+        freeTypeFontParameter1.borderWidth = 1;
+        freeTypeFontParameter1.borderColor = Color.BLACK;
 
         BitmapFont bitmapFont = freeTypeFontGenerator.generateFont(freeTypeFontParameter);
-
+        BitmapFont bitmapFont1 = freeTypeFontGenerator.generateFont(freeTypeFontParameter1);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = bitmapFont;
         textButtonStyle.fontColor = Color.WHITE;
 
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = bitmapFont1;
+        labelStyle.fontColor = Color.WHITE;
+
         startButton = new TextButton("START", textButtonStyle);
         startButton.setPosition(stage.getWidth() - startButton.getWidth()/0.45f, stage.getHeight() - startButton.getHeight());
+
+        label = new Label("( Pulsa ESC para volver )", labelStyle);
+        label.setPosition(15,10);
 
         texture1 = new Texture("personajes/Goku/gstandr.png");
         texture2 = new Texture("personajes/Vegeta/vstandr.png");
@@ -80,6 +96,8 @@ public class PantallaSeleccion implements Screen {
         stage.addActor(vegeta);
         stage.addActor(piccolo);
 
+        stage.addActor(label);
+
         personajeActual = 1;
 
     }
@@ -98,6 +116,11 @@ public class PantallaSeleccion implements Screen {
 
             cont++;
             stage.addActor(startButton);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            juego.setScreen(new PantallaMenu(juego));
+            dispose();
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.A )||(Gdx.input.isKeyPressed(Input.Keys.LEFT))){

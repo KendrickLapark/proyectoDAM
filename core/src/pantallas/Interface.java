@@ -81,4 +81,8 @@ public class Interface {
     public static float getTiempo() {
         return tiempo;
     }
+
+    public static int getTiempototal() {
+        return tiempototal;
+    }
 }

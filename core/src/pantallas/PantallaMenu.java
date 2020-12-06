@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Juego;
@@ -31,12 +32,11 @@ public class PantallaMenu implements Screen {
         FreeTypeFontGenerator freeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("recursos/impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter freeTypeFontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-
         freeTypeFontParameter.size = 12;
         freeTypeFontParameter.borderWidth = 1;
-        //freeTypeFontParameter.borderColor = Color.PURPLE;
 
         BitmapFont bitmapFont = freeTypeFontGenerator.generateFont(freeTypeFontParameter);
+
 
 
         textButtonStyle = new TextButton.TextButtonStyle();
@@ -46,7 +46,6 @@ public class PantallaMenu implements Screen {
         textButtonStyle2 =new TextButton.TextButtonStyle();
         textButtonStyle2.font = bitmapFont;
         textButtonStyle2.fontColor = Color.WHITE;
-
 
         startButton = new TextButton("Nueva Partida", textButtonStyle);
         startButton.setPosition(stage.getWidth() - startButton.getWidth()/0.75f, stage.getHeight() - startButton.getHeight()/0.6f);
