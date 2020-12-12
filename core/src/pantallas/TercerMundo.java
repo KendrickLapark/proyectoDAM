@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import actores.Enemigo;
 import actores.Personaje;
+import actores.Plataforma;
 import input.Teclado;
 import objetos.Onda;
 
@@ -46,6 +47,8 @@ public class TercerMundo implements Screen {
     private Body rectanguloSuelo;
 
     private Personaje p1;
+
+    private Plataforma pt1;
 
     private OrthographicCamera orthographicCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -82,9 +85,16 @@ public class TercerMundo implements Screen {
         enemigosDestroy = new ArrayList<>();
         ondasToDestroy = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,10,2.6f);
+        p1 = new Personaje(world, personajeSeleccionado,110,2.6f);
+
+        pt1 = new Plataforma(world, 113,1.5f, 115, 136);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
+
+        musica = Gdx.audio.newMusic(Gdx.files.internal("sonido/musica/cyberpunk.mp3"));
+        musica.play();
+        musica.setVolume(0.03f);
+        musica.setLooping(true);
 
         Interface.SetSpriteBatch(juego.getSpriteBatch(), p1.getKi());
 
@@ -95,7 +105,7 @@ public class TercerMundo implements Screen {
         e3 = new Enemigo(world,41,46,1, 43, 9.6f);
         e4 = new Enemigo(world,70,75,1, 72, 10.6f);
         e5 = new Enemigo(world,84,88,1, 86, 14.6f);
-        e6 = new Enemigo(world,96,104,1, 100, 2.6f);
+        e6 = new Enemigo(world,92,104,1, 100, 2.6f);
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
@@ -268,6 +278,8 @@ public class TercerMundo implements Screen {
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
 
+        pt1.draw(juego.getSpriteBatch(),0);
+
         for(Enemigo e:listaEnemigos){
 
             e.animacionAcciones(elapsedTime, p1);
@@ -339,6 +351,9 @@ public class TercerMundo implements Screen {
 
     @Override
     public void dispose() {
+
+        orthogonalTiledMapRenderer.dispose();
+        musica.dispose();
 
     }
 
