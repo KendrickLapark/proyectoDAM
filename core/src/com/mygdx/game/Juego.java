@@ -14,6 +14,7 @@ import pantallas.PantallaGameOver;
 import pantallas.PantallaTransicion;
 import pantallas.PrimerMundo;
 import pantallas.SegundoMundo;
+import pantallas.TercerMundo;
 
 public class Juego extends Game {
 
@@ -23,7 +24,7 @@ public class Juego extends Game {
 	public void create () {
 
 		spriteBatch = new SpriteBatch();
-		setScreen(new SegundoMundo(this, 1));
+		setScreen(new TercerMundo(this, 1));
 
 	}
 

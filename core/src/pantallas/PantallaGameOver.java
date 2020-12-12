@@ -68,6 +68,13 @@ public class PantallaGameOver implements Screen {
             }
         }
 
+        if(numMundo == 3){
+            if(Gdx.input.justTouched()){
+                juego.setScreen(new TercerMundo(juego, personajeElegido));
+                dispose();
+            }
+        }
+
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
