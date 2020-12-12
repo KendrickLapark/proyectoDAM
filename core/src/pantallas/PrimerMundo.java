@@ -55,7 +55,7 @@ public class PrimerMundo implements Screen {
     private Personaje p1;
     private Enemigo e1,e2,e3,e4,e5,e6,e7;
     private Capsula c1,c2,c3,c4,c5;
-    private Arroz a1,a2;
+    private Arroz arroz;
     private Plataforma pt1;
     private Checkpoint checkpoint;
 
@@ -64,7 +64,6 @@ public class PrimerMundo implements Screen {
     private ArrayList<Enemigo> listaEnemigos;
     private ArrayList<Enemigo> enemigosDestroy;
     private ArrayList<Capsula> listaCapsulas;
-    private ArrayList<Arroz> listaArroz;
 
     private Music musica, deadSaibaman;
 
@@ -73,7 +72,7 @@ public class PrimerMundo implements Screen {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     private int personajeSeleccionado, puntuacion;
-    private float velocidadRecarga, timerTransicion;
+    private float timerTransicion;
 
     float elapsedTime;
 
@@ -94,12 +93,11 @@ public class PrimerMundo implements Screen {
         puntuacion = 0;
         listaEnemigos =  new ArrayList<>();
         listaCapsulas = new ArrayList<>();
-        listaArroz = new ArrayList<>();
         enemigosDestroy = new ArrayList<>();
 
         p1 = new Personaje(world, personajeSeleccionado,8,2.6f);
 
-        pt1 = new Plataforma(world, 149,13.5f);
+        pt1 = new Plataforma(world, 149,13.5f, 150, 163);
         checkpoint = new Checkpoint(world, 187,2.6f);
 
         e1 = new Enemigo(world,8,16,1, 10, 2.6f);
@@ -116,11 +114,7 @@ public class PrimerMundo implements Screen {
         listaEnemigos.add(e5);
         listaEnemigos.add(e6);
 
-        a1 = new Arroz(world, p1, "objetos/rize.png",145,17);
-        a2 = new Arroz(world, p1, "objetos/rize.png", 90, 5);
-
-        listaArroz.add(a1);
-        listaArroz.add(a2);
+        arroz = new Arroz(world, p1, "objetos/rize.png", 90, 5);
 
         c1 = new Capsula(world, p1,"objetos/capsule.png", 11,11);
         c2 = new Capsula(world,p1,"objetos/capsule.png",33,7);
@@ -365,12 +359,8 @@ public class PrimerMundo implements Screen {
 
         }
 
-        for(Arroz co: listaArroz){
-
-            co.draw(juego.getSpriteBatch(),0);
-            co.recoleccion(p1);
-
-        }
+        arroz.draw(juego.getSpriteBatch(),0);
+        arroz.recoleccion(p1);
 
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 

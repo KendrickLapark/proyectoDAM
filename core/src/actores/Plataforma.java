@@ -15,14 +15,18 @@ public class Plataforma extends Actor {
     private World world;
     private Sprite sprite;
     public Body body;
+    int puntoA, puntoB;
 
     public enum Estado  { IDA, VUELTA};
 
     Estado actual;
 
-    public Plataforma(World mundo, float x, float y){
+    public Plataforma(World mundo, float x, float y, int a, int b){
 
         this.world = mundo;
+
+        puntoA = a;
+        puntoB = b;
 
         sprite = new Sprite(new Texture("Objetos/plataforma.png"));
 
@@ -57,13 +61,10 @@ public class Plataforma extends Actor {
 
     public void move(){
 
-        int a = 150;
-        int b = 163;
-
-        if(this.body.getPosition().x<a){
+        if(this.body.getPosition().x<puntoA){
             actual = Estado.IDA;
         }
-        if(this.body.getPosition().x>b){
+        if(this.body.getPosition().x>puntoB){
             actual = Estado.VUELTA;
         }
 

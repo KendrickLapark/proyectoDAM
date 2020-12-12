@@ -17,14 +17,13 @@ import pantallas.SegundoMundo;
 
 public class Juego extends Game {
 
-	private Screen pantallaActual;
 	public SpriteBatch spriteBatch;
 
 	@Override
 	public void create () {
 
 		spriteBatch = new SpriteBatch();
-		setScreen(new PrimerMundo(this, 1));
+		setScreen(new SegundoMundo(this, 1));
 
 	}
 

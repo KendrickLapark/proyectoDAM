@@ -29,8 +29,12 @@ import com.mygdx.game.Juego;
 
 import java.util.ArrayList;
 
+import actores.Arroz;
+import actores.Capsula;
+import actores.Checkpoint;
 import actores.Enemigo;
 import actores.Personaje;
+import actores.Plataforma;
 import input.Teclado;
 import objetos.Onda;
 
@@ -47,11 +51,22 @@ public class SegundoMundo implements Screen {
 
     private Personaje p1;
 
-    private Enemigo e1, e2, e3, e4, e5, e6;
+    private Enemigo e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11;
+
+    private Capsula c1, c2, c3, c4, c5, c6, c7, c8;
+
+    private Arroz arroz;
+
+    private float timerTransicion;
+
+    private Checkpoint checkpoint;
+
+    private Plataforma pt1;
 
     private ArrayList<Enemigo> listaEnemigos;
     private ArrayList<Onda> ondasToDestroy;
     private ArrayList<Enemigo> enemigosDestroy;
+    private ArrayList<Capsula> listaCapsulas;
 
     private OrthographicCamera orthographicCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -77,24 +92,60 @@ public class SegundoMundo implements Screen {
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(map,1/16f);
 
         blank = new Texture("recursos/blank.png");
+        timerTransicion = 0;
 
         listaEnemigos =  new ArrayList<>();
         enemigosDestroy = new ArrayList<>();
         ondasToDestroy = new ArrayList<>();
+        listaCapsulas = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,91,2.6f);
+        checkpoint = new Checkpoint(world, 187,2.6f);
+
+        p1 = new Personaje(world, personajeSeleccionado,133,2.6f);
+
+        pt1 = new Plataforma(world, 127,13.5f, 127, 141);
+
+        arroz = new Arroz(world, p1, "objetos/rize.png", 118.5f, 9);
 
         e1 = new Enemigo(world,8,16,1, 10, 2.6f);
         e2 = new Enemigo(world, 38, 48,1,42, 2.6f);
         e3 = new Enemigo(world, 70, 87, 1,84,5.5f);
         e4 = new Enemigo(world, 69, 78,1,74 , 2.6f);
         e5 = new Enemigo(world, 90, 102, 1, 96, 2.6f);
+        e6 = new Enemigo(world, 107,  114, 1, 110, 8.6f);
+        e7 = new Enemigo(world, 121, 125,1, 123, 8.6f);
+        e8 = new Enemigo(world, 121, 125,1, 123, 14.6f);
+        e9 = new Enemigo(world, 142, 152,1, 144, 14.6f);
+        e10 = new Enemigo(world, 142, 152,1, 148, 2.6f);
+        e11 = new Enemigo(world, 167, 175,1, 172, 2.6f);
 
         listaEnemigos.add(e1);
         listaEnemigos.add(e2);
         listaEnemigos.add(e3);
         listaEnemigos.add(e4);
         listaEnemigos.add(e5);
+        listaEnemigos.add(e6);
+        listaEnemigos.add(e7);
+        listaEnemigos.add(e8);
+        listaEnemigos.add(e9);
+        listaEnemigos.add(e10);
+        listaEnemigos.add(e11);
+
+        c1 = new Capsula(world, p1,"objetos/capsule.png", 27,7);
+        c2 = new Capsula(world, p1,"objetos/capsule.png", 65.5f,7);
+        c3 = new Capsula(world, p1,"objetos/capsule.png", 84,10);
+        c4 = new Capsula(world, p1,"objetos/capsule.png", 123.5f,11);
+        c5 = new Capsula(world, p1,"objetos/capsule.png", 133.5f,17);
+        c6 = new Capsula(world, p1,"objetos/capsule.png", 148,17);
+        c7 = new Capsula(world, p1,"objetos/capsule.png", 165,7);
+
+        listaCapsulas.add(c1);
+        listaCapsulas.add(c2);
+        listaCapsulas.add(c3);
+        listaCapsulas.add(c4);
+        listaCapsulas.add(c5);
+        listaCapsulas.add(c6);
+        listaCapsulas.add(c7);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -195,9 +246,6 @@ public class SegundoMundo implements Screen {
 
                 }
 
-
-
-
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
@@ -252,7 +300,16 @@ public class SegundoMundo implements Screen {
 
         orthographicCamera.update();
 
-        orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
+        if(p1.getEstado()!=Personaje.Estado.TRANSICION){
+            orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
+        }else{
+            orthographicCamera.position.x = 186.8f;
+            if(p1.getTransitionTime()>3){
+                juego.setScreen(new SegundoMundo(juego,personajeSeleccionado));
+                Interface.tiempo=0;
+                dispose();
+            }
+        }
 
         orthogonalTiledMapRenderer.setView(orthographicCamera);
 
@@ -266,8 +323,15 @@ public class SegundoMundo implements Screen {
 
         Interface.draw(orthographicCamera, p1.getKi(), p1.getSalud(), puntuacion);
 
+        arroz.draw(juego.getSpriteBatch(),0);
+        arroz.recoleccion(p1);
+
+        checkpoint.draw(juego.getSpriteBatch(),0);
+
         p1.animaciones(elapsedTime);
         p1.draw(juego.getSpriteBatch(),0);
+
+        pt1.draw(juego.getSpriteBatch(),0);
 
         System.out.println("Coordenadas del personaje X: "+p1.getCuerpo().getPosition().x+", Y: "+p1.getCuerpo().getPosition().y);
 
@@ -299,6 +363,20 @@ public class SegundoMundo implements Screen {
 
         }
 
+        for(Capsula c : listaCapsulas){
+
+            c.draw(juego.getSpriteBatch(),0);
+
+            if(c.getContadorColision()==1){
+
+                puntuacion+=10;
+
+            }
+
+            c.recoleccion(p1);
+
+        }
+
         if(p1.getSalud() == 0 || Interface.tiempototal<0){
 
             juego.setScreen(new PantallaGameOver(juego, personajeSeleccionado, 2));
@@ -317,14 +395,24 @@ public class SegundoMundo implements Screen {
 
             juego.getSpriteBatch().draw(blank, p1.getCuerpo().getPosition().x-3, -0.5f, p1.getKi(), 0.2f);
 
-
         }else{
+
+            timerTransicion+= Gdx.graphics.getDeltaTime();
+
             juego.getSpriteBatch().setColor(Color.GRAY);
             juego.getSpriteBatch().draw(blank,184,-0.5f, 8,0.2f);
 
             juego.getSpriteBatch().setColor(Color.YELLOW);
 
             juego.getSpriteBatch().draw(blank, 184, -0.5f, p1.getKi(), 0.2f);
+
+            if(timerTransicion>3){
+
+                juego.setScreen(new PantallaTransicion(juego, puntuacion, personajeSeleccionado, 1, Interface.getTiempototal()));
+                dispose();
+
+            }
+
         }
 
         juego.getSpriteBatch().end();
