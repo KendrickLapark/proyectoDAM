@@ -53,7 +53,7 @@ public class SegundoMundo implements Screen {
 
     private Enemigo e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11;
 
-    private Capsula c1, c2, c3, c4, c5, c6, c7, c8;
+    private Capsula c1, c2, c3, c4, c5, c6, c7;
 
     private Arroz arroz;
 
@@ -101,7 +101,7 @@ public class SegundoMundo implements Screen {
 
         checkpoint = new Checkpoint(world, 187,2.6f);
 
-        p1 = new Personaje(world, personajeSeleccionado,133,2.6f);
+        p1 = new Personaje(world, personajeSeleccionado,5,2.6f);
 
         pt1 = new Plataforma(world, 127,13.5f, 127, 141);
 
@@ -315,8 +315,6 @@ public class SegundoMundo implements Screen {
 
         orthogonalTiledMapRenderer.render();
 
-        box2DDebugRenderer.render(world, orthographicCamera.combined);
-
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
         juego.getSpriteBatch().begin();
@@ -408,7 +406,7 @@ public class SegundoMundo implements Screen {
 
             if(timerTransicion>3){
 
-                juego.setScreen(new PantallaTransicion(juego, puntuacion, personajeSeleccionado, 1, Interface.getTiempototal()));
+                juego.setScreen(new PantallaTransicion(juego, puntuacion, personajeSeleccionado, 2, Interface.getTiempototal()));
                 dispose();
 
             }

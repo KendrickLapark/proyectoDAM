@@ -303,8 +303,6 @@ public class PrimerMundo implements Screen {
 
         orthogonalTiledMapRenderer.render();
 
-        box2DDebugRenderer.render(world, orthographicCamera.combined);
-
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
         juego.getSpriteBatch().begin();

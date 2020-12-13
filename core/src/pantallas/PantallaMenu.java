@@ -48,13 +48,10 @@ public class PantallaMenu implements Screen {
         textButtonStyle2.fontColor = Color.WHITE;
 
         startButton = new TextButton("Nueva Partida", textButtonStyle);
-        startButton.setPosition(stage.getWidth() - startButton.getWidth()/0.75f, stage.getHeight() - startButton.getHeight()/0.6f);
-
-        optionsButton = new TextButton("Opciones", textButtonStyle);
-        optionsButton.setPosition(stage.getWidth() - optionsButton.getWidth()/0.55f, stage.getHeight() - optionsButton.getHeight()/0.26f);
+        startButton.setPosition(stage.getWidth() - startButton.getWidth()/0.75f, stage.getHeight() - startButton.getHeight()/0.4f);
 
         exitButton = new TextButton("Salir", textButtonStyle);
-        exitButton.setPosition(stage.getWidth() - exitButton.getWidth()/0.33f, stage.getHeight() - exitButton.getHeight()/0.17f);
+        exitButton.setPosition(stage.getWidth() - exitButton.getWidth()/0.33f, stage.getHeight() - exitButton.getHeight()/0.2f);
 
         opcionSeleccionada=1;
 
@@ -70,7 +67,6 @@ public class PantallaMenu implements Screen {
     void controlador(){
 
         stage.addActor(startButton);
-        stage.addActor(optionsButton);
         stage.addActor(exitButton);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.S )||(Gdx.input.isKeyPressed(Input.Keys.DOWN))){
@@ -115,19 +111,16 @@ public class PantallaMenu implements Screen {
 
         if(opcionSeleccionada==1){
             startButton.setStyle(textButtonStyle2);
-            optionsButton.setStyle(textButtonStyle);
             exitButton.setStyle(textButtonStyle);
         }
 
         if(opcionSeleccionada==2){
             startButton.setStyle(textButtonStyle);
-            optionsButton.setStyle(textButtonStyle2);
             exitButton.setStyle(textButtonStyle);
         }
 
         if(opcionSeleccionada==3){
             startButton.setStyle(textButtonStyle);
-            optionsButton.setStyle(textButtonStyle);
             exitButton.setStyle(textButtonStyle2);
         }
 

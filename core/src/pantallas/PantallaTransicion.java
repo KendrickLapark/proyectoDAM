@@ -98,6 +98,14 @@ public class PantallaTransicion implements Screen {
             }
         }
 
+        if(mundoPrevio==2){
+            if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()){
+
+                juego.setScreen(new TercerMundo(juego, personajeOpcion));
+
+            }
+        }
+
 
 
     }

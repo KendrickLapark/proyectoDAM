@@ -29,6 +29,8 @@ import com.mygdx.game.Juego;
 
 import java.util.ArrayList;
 
+import actores.Capsula;
+import actores.Checkpoint;
 import actores.Enemigo;
 import actores.Personaje;
 import actores.Plataforma;
@@ -50,10 +52,14 @@ public class TercerMundo implements Screen {
 
     private Plataforma pt1;
 
+    private Checkpoint checkpoint;
+
     private OrthographicCamera orthographicCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     private int personajeSeleccionado, puntuacion;
+
+    private float timerTransicion;
 
     private Texture blank;
 
@@ -62,6 +68,9 @@ public class TercerMundo implements Screen {
     private ArrayList<Enemigo> listaEnemigos;
     private ArrayList<Enemigo> enemigosDestroy;
     private ArrayList<Onda> ondasToDestroy;
+    private ArrayList<Capsula> listaCapsulas;
+
+    private Capsula c1, c2, c3, c4, c5, c6;
 
     private Music musica;
 
@@ -81,13 +90,32 @@ public class TercerMundo implements Screen {
 
         blank = new Texture("recursos/blank.png");
 
+        timerTransicion = 0;
+
         listaEnemigos = new ArrayList<>();
         enemigosDestroy = new ArrayList<>();
         ondasToDestroy = new ArrayList<>();
+        listaCapsulas = new ArrayList<>();
 
-        p1 = new Personaje(world, personajeSeleccionado,110,2.6f);
+        checkpoint = new Checkpoint(world, 147,2.6f);
+
+        p1 = new Personaje(world, personajeSeleccionado,146,2.6f);
 
         pt1 = new Plataforma(world, 113,1.5f, 115, 136);
+
+        c1 = new Capsula(world, p1,"objetos/capsule.png", 27,7);
+        c2 = new Capsula(world, p1,"objetos/capsule.png", 65.5f,13);
+        c3 = new Capsula(world, p1,"objetos/capsule.png", 86,17);
+        c4 = new Capsula(world, p1,"objetos/capsule.png", 109,7);
+        c5 = new Capsula(world, p1,"objetos/capsule.png", 123,7);
+        c6 = new Capsula(world, p1,"objetos/capsule.png", 140,7);
+
+        listaCapsulas.add(c1);
+        listaCapsulas.add(c2);
+        listaCapsulas.add(c3);
+        listaCapsulas.add(c4);
+        listaCapsulas.add(c5);
+        listaCapsulas.add(c6);
 
         box2DDebugRenderer = new Box2DDebugRenderer();
 
@@ -113,8 +141,6 @@ public class TercerMundo implements Screen {
         listaEnemigos.add(e4);
         listaEnemigos.add(e5);
         listaEnemigos.add(e6);
-
-        //poscentralfinal = 148.92f
 
         orthographicCamera.zoom = 1;
 
@@ -260,14 +286,11 @@ public class TercerMundo implements Screen {
 
         orthographicCamera.update();
 
-
         orthographicCamera.position.x = p1.getCuerpo().getPosition().x;
 
         orthogonalTiledMapRenderer.setView(orthographicCamera);
 
         orthogonalTiledMapRenderer.render();
-
-        box2DDebugRenderer.render(world, orthographicCamera.combined);
 
         juego.getSpriteBatch().setProjectionMatrix(orthographicCamera.combined);
 
@@ -279,6 +302,8 @@ public class TercerMundo implements Screen {
         p1.draw(juego.getSpriteBatch(),0);
 
         pt1.draw(juego.getSpriteBatch(),0);
+
+        checkpoint.draw(juego.getSpriteBatch(),0);
 
         for(Enemigo e:listaEnemigos){
 
@@ -308,6 +333,20 @@ public class TercerMundo implements Screen {
 
         }
 
+        for(Capsula c : listaCapsulas){
+
+            c.draw(juego.getSpriteBatch(),0);
+
+            if(c.getContadorColision()==1){
+
+                puntuacion+=10;
+
+            }
+
+            c.recoleccion(p1);
+
+        }
+
         if(p1.getSalud() == 0 || Interface.tiempototal<0){
 
             juego.setScreen(new PantallaGameOver(juego, personajeSeleccionado, 3));
@@ -318,12 +357,33 @@ public class TercerMundo implements Screen {
 
         teclado.entrada();
 
-        juego.getSpriteBatch().setColor(Color.GRAY);
-        juego.getSpriteBatch().draw(blank,p1.getCuerpo().getPosition().x-3,-0.5f, 8,0.2f);
+        if(p1.getEstado()!= Personaje.Estado.TRANSICION){
+            juego.getSpriteBatch().setColor(Color.GRAY);
+            juego.getSpriteBatch().draw(blank,p1.getCuerpo().getPosition().x-3,-0.5f, 8,0.2f);
 
-        juego.getSpriteBatch().setColor(Color.YELLOW);
+            juego.getSpriteBatch().setColor(Color.YELLOW);
 
-        juego.getSpriteBatch().draw(blank, p1.getCuerpo().getPosition().x-3, -0.5f, p1.getKi(), 0.2f);
+            juego.getSpriteBatch().draw(blank, p1.getCuerpo().getPosition().x-3, -0.5f, p1.getKi(), 0.2f);
+
+        }else{
+
+            timerTransicion+= Gdx.graphics.getDeltaTime();
+
+            juego.getSpriteBatch().setColor(Color.GRAY);
+            juego.getSpriteBatch().draw(blank,184,-0.5f, 8,0.2f);
+
+            juego.getSpriteBatch().setColor(Color.YELLOW);
+
+            juego.getSpriteBatch().draw(blank, 184, -0.5f, p1.getKi(), 0.2f);
+
+            if(timerTransicion>3){
+
+                juego.setScreen(new PantallaTransicion(juego, puntuacion, personajeSeleccionado, 2, Interface.getTiempototal()));
+                dispose();
+
+            }
+
+        }
 
         juego.getSpriteBatch().end();
 
