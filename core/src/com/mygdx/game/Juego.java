@@ -9,12 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import pantallas.PantallaMenu;
-import pantallas.PantallaSeleccion;
-import pantallas.PantallaGameOver;
-import pantallas.PantallaTransicion;
-import pantallas.PrimerMundo;
-import pantallas.SegundoMundo;
-import pantallas.TercerMundo;
 
 public class Juego extends Game {
 
@@ -24,7 +18,7 @@ public class Juego extends Game {
 	public void create () {
 
 		spriteBatch = new SpriteBatch();
-		setScreen(new TercerMundo(this, 1));
+		setScreen(new PantallaMenu(this));
 
 	}
 
